@@ -1,3 +1,3 @@
 module.exports = {
-  extends: '@tencent/eslint-config-fdjs',
+  extends: 'eslint-config-imweb',
 }
