@@ -1,0 +1,26 @@
+{
+  "name": "fudao.qq.com",
+  "version": "0.0.1",
+  "description": "企鹅辅导组件库",
+  "main": "page/demo/demo.jsx",
+  "scripts": {
+    "lint": "node node_modules/@tencent/fdjs-scripts/eslint/index.js check-changed",
+    "precommit": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.code.oa.com/k12_proj/pc.git"
+  },
+  "keywords": [
+    "企鹅辅导",
+    "K12"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@tencent/eslint-config-fdjs": "^0.1.2",
+    "@tencent/fdjs-scripts": "^0.1.2",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.9.0",
+    "jest": "^20.0.4"
+  }
+}
