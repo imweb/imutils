@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "node node_modules/@tencent/fdjs-scripts/eslint/index.js check-changed",
     "precommit": "npm run lint",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
