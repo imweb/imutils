@@ -1,11 +1,11 @@
 {
   "name": "@tencent/imutils-pc",
-  "version": "0.1.8",
-  "description": "企鹅辅导组件库",
+  "version": "0.1.9",
+  "description": "企鹅辅导工具库",
   "main": "index.js",
   "scripts": {
     "lint": "eslint *.js h5 client lib",
-    "lint:fix": "eslint --fix *.js h5 client lib",
+    "lint:fix": "eslint --fix *.js h5 client lib src",
     "precommit": "npm run lint",
     "test": "jest --coverage"
   },
