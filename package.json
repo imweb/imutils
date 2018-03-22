@@ -1,8 +1,8 @@
 {
-  "name": "fudao.qq.com",
-  "version": "0.0.1",
+  "name": "@tencent/imutils-pc",
+  "version": "0.1.8",
   "description": "企鹅辅导组件库",
-  "main": "page/demo/demo.jsx",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint *.js h5 client lib",
     "lint:fix": "eslint --fix *.js h5 client lib",

@@ -1,3 +1,15 @@
-npm-debug.log
 .DS_Store
 node_modules
+*.bak
+*.tern-port
+*.tern-project
+/dev
+/release
+/dist
+/log
+npm-debug.log
+.idea
+.DS_Store
+.tern-port
+.tern-project
+*.bak
