@@ -7,8 +7,10 @@ import {
 import {
   formatShortSignUpNum,
   formatDate,
+  formatTaskTime,
   price,
   prices,
+  translateTimeStamp,
 } from './util_01_format';
 
 import { decodeHtml } from './util_02';
@@ -35,6 +37,7 @@ import {
   getIEVer,
   getSafariVer,
   getFirefoxVer,
+  getTeacherClient,
   isIphoneX,
 } from './util_04_ua';
 
@@ -90,17 +93,20 @@ import {
   isVisible,
   closest,
   ensureVisible,
+  normalizeWheel,
 } from './util_12_dom';
 
 import {
   CourseType,
   SUBJECTS,
+  grade,
   GRADES,
   getSavedSubject,
   getSubjectName,
   getSubjectShortName,
   getGradeName,
   COURSE_TYPE,
+  getTutorial,
 } from './util_13_constant';
 
 import { addPageShowListener } from './util_14_bom';
@@ -119,6 +125,8 @@ import {
   callBussinessQQ,
   callQQGroup,
 } from './util_16_qq';
+
+import { msgTools } from './util_17_chat';
 
 // 手Q750-阅读内容与消息列表快捷切换
 // android 特殊处理
@@ -166,6 +174,7 @@ module.exports = {
   getIEVer,
   getSafariVer,
   getFirefoxVer,
+  getTeacherClient,
   isIphoneX,
   weiXinApply,
   decodeHtml,
@@ -175,7 +184,9 @@ module.exports = {
   formatShortSignUpNum,
   price,
   prices,
+  translateTimeStamp,
   formatDate,
+  formatTaskTime,
   login,
   qqLogin,
   wxLogin,
@@ -201,15 +212,19 @@ module.exports = {
   isVisible,
   closest,
   ensureVisible,
+  normalizeWheel,
   // 常量
   CourseType,
+  grade,
   GRADES,
   SUBJECTS,
+  SUBJECTS2: SUBJECTS, // 为什么要重复 export ???
   getSavedSubject,
   getSubjectName,
   getSubjectShortName,
   getGradeName,
   COURSE_TYPE,
+  getTutorial,
   isIE,
   // 难以分类的
   getBitMapValue,
@@ -236,4 +251,6 @@ module.exports = {
   callService,
   callBussinessQQ,
   callQQGroup,
+
+  msgTools,
 };

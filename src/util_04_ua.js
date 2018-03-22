@@ -243,6 +243,11 @@ function getFirefoxVer() {
   return false;
 }
 
+function getTeacherClient() {
+  const version = (/TXK12\/(\d+)/.exec(navigator.userAgent) || [])[1];
+  return version || 0;
+}
+
 function isIphoneX() {
   return window.screen.width === 375 && window.screen.height === 812;
 }
@@ -268,5 +273,6 @@ export {
   getIEVer,
   getSafariVer,
   getFirefoxVer,
+  getTeacherClient,
   isIphoneX,
 };

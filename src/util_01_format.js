@@ -69,9 +69,43 @@ function formatDate(pattern, date) {
   });
 }
 
+function formatTaskTime(time, type = 'short') {
+  const date = new Date(time * 1000);
+  let dateStr = '';
+  let h = date.getHours();
+  let m = date.getMinutes();
+  h = h >= 10 ? h : '0' + h;
+  m = m >= 10 ? m : '0' + m;
+  if (type === 'short') {
+    dateStr = h + ':' + m;
+  } else if (type === 'middle') {
+    dateStr = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + h + ':' + m;
+  } else {
+    dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + h + ':' + m;
+  }
+  return dateStr;
+}
+
+function formatTime(m) {
+  return m < 10 ? '0' + m : m;
+}
+
+function translateTimeStamp(time) {
+  time = new Date(time * 1000);
+  const y = time.getFullYear();
+  const m = time.getMonth() + 1;
+  const d = time.getDate();
+  const h = time.getHours();
+  const mm = time.getMinutes();
+  const s = time.getSeconds();
+  return y + '-' + formatTime(m) + '-' + formatTime(d) + ' ' + formatTime(h) + ':' + formatTime(mm) + ':' + formatTime(s);
+}
+
 export {
   formatShortSignUpNum,
   formatDate,
+  formatTaskTime,
   price,
   prices,
+  translateTimeStamp,
 };

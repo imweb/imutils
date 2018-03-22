@@ -141,9 +141,26 @@ function getGradeName(str) {
   }
 }
 
+const tutorial = {
+  1: '人教版',
+  2: '沪教版',
+  3: '苏教版',
+  4: '浙教版',
+  5: '外研版',
+  6: '华师大版',
+  7: '青岛版',
+  8: '北师大版',
+  1000: '其他',
+};
+
+function getTutorial(num) {
+  return tutorial[num];
+}
+
 export {
   CourseType,
   SUBJECTS,
+  grade, // deprecated use GRADES please
   GRADES,
   getSavedSubject,
 
@@ -151,4 +168,5 @@ export {
   getSubjectShortName,
   getGradeName,
   COURSE_TYPE,
+  getTutorial,
 };
