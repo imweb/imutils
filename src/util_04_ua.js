@@ -11,7 +11,7 @@ const isWeixin = UA.indexOf('micromessenger') !== -1;
 const isQQ = UA.indexOf('mqqbrowser') !== -1;
 
 // 是否QQ登陆
-const isQQLogin = Number.parseInt(getCookie('uid_type'), 10) === 0;
+const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 
 // 获取qq uin
 function getQQUin() {

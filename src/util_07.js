@@ -108,7 +108,7 @@ function getCourseUrl(cid) {
   if (typeof location !== 'undefined') {
     protocol = location.protocol;
   }
-  return protocol + '//fudao.qq.com/course.html?_bid=2379&course_id=' + cid;
+  return `${protocol}//fudao.qq.com/course.html?_bid=2379&course_id=${cid}`;
 }
 
 function getTeacherUrl(tid) {
