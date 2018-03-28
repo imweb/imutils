@@ -113,6 +113,51 @@ function callQQGroup(url) {
   }
 }
 
+// dialog 提示
+// TODO 移除，这里引入了第三方的 dialog 了
+function showDialog(tipText, option) {
+  const defaultOption = {
+    okBtnText: '我知道了',
+    title: '提示',
+    onConfirmCb() {},
+  };
+
+  // option = $.extend(defaultOption, option);
+  option = { ...defaultOption, ...option };
+
+  if (isMQQ() && window.mqq) {
+    const { mqq } = window;
+    setTimeout(() => {
+      mqq.ui.showDialog({
+        title: option.title,
+        text: tipText,
+        needOkBtn: true,
+        needCancelBtn: !!option.cancelBtnText,
+        okBtnText: option.okBtnText,
+        cancelBtnText: option.cancelBtnText,
+      }, (result) => {
+        if (result.button === 0) {
+          option.onConfirmCb();
+        }
+      });
+    }, 0);
+  } else {
+    // setTimeout(() => {
+    //   // TODO
+    //   dialog.show({
+    //     title: option.title,
+    //     content: tipText,
+    //     confirm: option.okBtnText,
+    //     cancel: option.cancelBtnText,
+    //     textAlign: 'center',
+    //     onConfirm() {
+    //       option.onConfirmCb();
+    //     },
+    //   });
+    // }, 0);
+  }
+}
+
 export {
   callService,
   callBussinessQQ,

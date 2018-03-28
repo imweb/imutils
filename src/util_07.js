@@ -1,4 +1,5 @@
 import { setCookie } from './util_03_cookie';
+import { isWX, isMQQ } from './util_04_ua';
 
 // 实在没有名字的
 function getBitMapValue(v, map) {
@@ -165,6 +166,48 @@ const photoProgress = {
   },
 };
 
+
+// TODO remove
+function setShareInfomation(title, desc, link, imgUrl) {
+  const opt = {
+    title,
+    desc,
+    link,
+    imgUrl,
+  };
+  if (isWX()) {
+    let s;
+    if (typeof wx === 'undefined') {
+      s = document.createElement('script');
+      s.setAttribute('src', '//res.wx.qq.com/open/js/jweixin-1.0.0.js');
+      document.head.appendChild(s);
+    }
+    s.onload = function () {
+      if (window.wx) {
+        const { wx } = window;
+        wx.config({
+          debug: false,
+          appId: 'wx90cb6dfbfe2d68df',
+          timestamp: new Date().getTime(),
+          nonceStr: 'fuckTheNoncestr',
+          signature: 'k12',
+          jsApiList: ['ready', 'onMenuShareAppMessage'],
+        });
+        wx.ready(() => {
+          wx.onMenuShareAppMessage(opt);
+          wx.onMenuShareTimeline(opt);
+          wx.onMenuShareQQ(opt);
+          wx.onMenuShareQZone(opt);
+        });
+      }
+    };
+  } else if (isMQQ()) {
+    if (window.mqq) {
+      window.mqq.data.setShareInfo(opt);
+    }
+  }
+}
+
 export {
   getBitMapValue,
   showTips,
@@ -177,4 +220,5 @@ export {
   getTeacherUrl,
   clickLock,
   photoProgress,
+  setShareInfomation,
 };

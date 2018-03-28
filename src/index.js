@@ -23,6 +23,7 @@ import {
   getAuth,
   getBkn,
   isWeixin,
+  isPC,
   isQQ,
   isWX,
   isMQQ,
@@ -56,6 +57,7 @@ import {
   getTeacherUrl,
   clickLock,
   photoProgress,
+  setShareInfomation,
 } from './util_07'; // 其它杂项
 
 import {
@@ -69,6 +71,7 @@ import {
   getParams,
   getHash,
   parseQueryString,
+  updateQueryString,
 } from './util_09_url';
 
 import {
@@ -160,6 +163,7 @@ module.exports = {
   getAuth,
   getBkn,
   isWeixin,
+  isPC,
   isQQ,
   isWX,
   isMQQ,
@@ -194,6 +198,7 @@ module.exports = {
   getHash,
   getParams,
   parseQueryString,
+  updateQueryString,
   // lang
   deepAssign,
   str,
@@ -238,6 +243,7 @@ module.exports = {
   getTeacherUrl,
   clickLock,
   photoProgress,
+  setShareInfomation,
 
   addPageShowListener,
 

@@ -52,6 +52,10 @@ function getBkn() {
   return encryptSkey(getAuth());
 }
 
+function isPC() {
+  return !/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
+}
+
 // TODO 删除这个方法
 function isWX() {
   return isWeixin;
@@ -259,6 +263,7 @@ export {
   getAuth,
   getBkn,
   isWeixin,
+  isPC,
   isWX,
   isQQ,
   isMQQ,
@@ -275,4 +280,5 @@ export {
   getFirefoxVer,
   getTeacherClient,
   isIphoneX,
+  setShareInfomation,
 };
