@@ -22,7 +22,7 @@ function getQQUin() {
 
 // 兼容微信和QQ
 function getUin() {
-  return isWeixin ? getCookie('uid_uin') || getQQUin() : getQQUin();
+  return (!isQQLogin) ? getCookie('uid_uin') || getQQUin() : getQQUin();
 }
 
 // 获取登录态字段
