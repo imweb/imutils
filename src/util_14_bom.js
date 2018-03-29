@@ -4,6 +4,9 @@ import {
   getAppVersion,
 } from './util_04_ua';
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function addPageShowListener(listener) {
   if (isFudaoApp()) {
     if (window.mqq && window.mqq.iOS && getAppVersion() >= 6) {

@@ -1,6 +1,3 @@
-// module storage
-// TODO 细化
-
 import { isServer } from './util_00_env';
 import { getCookie } from './util_03_cookie';
 import {
@@ -18,6 +15,9 @@ function getKey(key) {
   return (getUin() || 'a_') + key;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 const storage = {
   set: function (key, value) {
     this.setGlobal(getKey(key), {

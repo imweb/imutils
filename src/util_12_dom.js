@@ -1,4 +1,6 @@
-// 光标控制
+/**
+ * @memberof module:tencent/imutils
+ */
 const selectionHandler = {
   // 保存光标
   saveSelection: function () {
@@ -94,7 +96,9 @@ const selectionHandler = {
 
 /**
  * 检查元素是否可见
+ * @memberof module:tencent/imutils
  * @param {Object} DOM 元素
+ * @return {bool}
  */
 function isVisible(el) {
   const rect = el.getBoundingClientRect();
@@ -120,6 +124,9 @@ function elementMatches(element, selector) {
   return Boolean(elements[index]);
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function closest(element, selector) {
   while (element && element.nodeType === 1) {
     if (elementMatches(element, selector)) {
@@ -132,6 +139,9 @@ function closest(element, selector) {
   return null;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function ensureVisible(elem, container) {
   // jquery offset原生实现
   function offset(target) {
@@ -171,7 +181,10 @@ const PIXEL_STEP = 10;
 const LINE_HEIGHT = 40;
 const PAGE_HEIGHT = 800;
 
-// 计算鼠标滑动动，导致的页面滚动量
+/**
+ * 计算鼠标滑动动，导致的页面滚动量
+ * @memberof module:tencent/imutils
+ */
 function normalizeWheel(event) {
   let sX = 0;
   let sY = 0; // spinX, spinY

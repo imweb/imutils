@@ -1,0 +1,24 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "include": ["src/", "README.md"],
+        "exclude": ["lib/*.js", "h5/*.js"]
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": false
+        }
+    },
+    "opts": {
+        "destination": "./api/",
+        "encoding": "utf8",
+        "private": false,
+        "recurse": true,
+        "template": "./doc-theme"
+    }
+}

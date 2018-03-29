@@ -7,7 +7,8 @@
     "lint": "eslint *.js h5 client lib",
     "lint:fix": "eslint --fix *.js h5 client lib src",
     "precommit": "npm run lint",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,10 @@
     "eslint": "^4.15.0",
     "eslint-config-imweb": "^0.2.4",
     "eslint-loader": "^1.9.0",
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "minami": "^1.2.3"
+  },
+  "dependencies": {
+    "jsdoc": "^3.5.5"
   }
 }

@@ -11,6 +11,9 @@ import { weiXinApply } from './util_11_wx';
 
 import { openUrlByIframe, openAppPage } from './util_15_app';
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function callService(serviceQQ) {
   const jumpUrl =
     'mqqapi://im/chat?chat_type=wpa&version=1&uin=' +
@@ -45,7 +48,10 @@ function callService(serviceQQ) {
   }
 }
 
-// 尝试呼起企业QQ
+/**
+ * 尝试呼起企业QQ
+ * @memberof module:tencent/imutils
+ */
 function callBussinessQQ(serviceQQ) {
   const url = 'http://q.url.cn/s/qy5XyFm?_type=wpa&isKfuin=1';
   if (isFudaoApp()) {
@@ -66,6 +72,9 @@ function callBussinessQQ(serviceQQ) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function callQQGroup(url) {
   const jumpUrl = url;
   const noQQTip = '请先安装QQ，才能加群';

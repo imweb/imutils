@@ -125,6 +125,9 @@ function getGradeName(str) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 const CourseType = {
   // user_all_course 的定义
   6: '讲座课',
@@ -134,6 +137,9 @@ const CourseType = {
   2: '讲座课',
 };
 
+/**
+ * @memberof module:tencent/imutils
+ */
 const GRADES = {
   '5001,5002,5003,6001,6002,6003': '全年级',
   '6001,6002,6003,5001,5002,5003': '全年级',
@@ -163,6 +169,9 @@ const GRADES = {
 
 mapReverse(GRADES);
 
+/**
+ * @memberof module:tencent/imutils
+ */
 const SUBJECTS = {
   6001: '语文',
   6002: '数学',
@@ -178,6 +187,9 @@ const SUBJECTS = {
 
 mapReverse(SUBJECTS);
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getSavedSubject() {
   const subject = storage.get('pl_subject_text') || '';
   const subjectIndex = storage.get('pl_subject_index') || 0;
@@ -188,6 +200,9 @@ function getSavedSubject() {
   };
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getSubjectName(num) {
   if (!num) {
     return '';
@@ -195,6 +210,9 @@ function getSubjectName(num) {
   return subject[num][0];
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getSubjectShortName(num) {
   if (!num) {
     return '';
@@ -202,6 +220,9 @@ function getSubjectShortName(num) {
   return subject[num][1];
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getGradeName(str) {
   if (!str) {
     return '';
@@ -235,6 +256,9 @@ const tutorial = {
   1000: '其他',
 };
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getTutorial(num) {
   return tutorial[num];
 }

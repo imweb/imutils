@@ -1,3 +1,6 @@
+/**
+ * @memberof module:tencent/imutils
+ */
 function weiXinApply(callback) {
   if (typeof window.WeixinJSBridge === 'object' &&
       typeof window.WeixinJSBridge.invoke === 'function') {

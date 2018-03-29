@@ -1,4 +1,10 @@
+/**
+ * @module tencent/imutils
+ * @description 一些描述信息一些描述信息一些描述信息
+ */
+
 import {
+  isClient,
   isServer,
   isSupportedWebP,
   isIE,
@@ -182,8 +188,6 @@ module.exports = {
   isIphoneX,
   weiXinApply,
   decodeHtml,
-  // env
-  isSupportedWebP,
   imgHashCache,
   formatShortSignUpNum,
   price,
@@ -230,6 +234,10 @@ module.exports = {
   getGradeName,
   COURSE_TYPE,
   getTutorial,
+  // env
+  isClient,
+  isServer,
+  isSupportedWebP,
   isIE,
   // 难以分类的
   getBitMapValue,

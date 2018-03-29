@@ -1,9 +1,9 @@
-// module cookie
-// TODO  set/getCookie 接口重构
-
 import { isServer } from './util_00_env';
 
-// 获取指定cookie
+/**
+ * 获取cookie
+ * @memberof module:tencent/imutils
+ */
 function getCookie(name) {
   if (isServer) {
     return '';
@@ -12,6 +12,10 @@ function getCookie(name) {
   return !m ? '' : decodeURIComponent(m[2]);
 }
 
+/**
+ * 设置 cookie
+ * @memberof module:tencent/imutils
+ */
 function setCookie(opt) {
   if (isServer) {
     return '';
@@ -23,6 +27,10 @@ function setCookie(opt) {
   document.cookie = opt.name + '=' + encodeURIComponent(opt.value) + ';expires=' + opt.time || exp.toGMTString() + ';domain=' + opt.domain || 'qq.com' + ';path=/';
 }
 
+/**
+ * 删除 cookie
+ * @memberof module:tencent/imutils
+ */
 function delCookie(name, domain, path) {
   if (isServer) {
     return '';

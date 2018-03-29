@@ -2,8 +2,11 @@ import storage from './util_05_storage';
 
 const IMGCACHEKEY = 'LAZYLOADIMGS';
 
-// 跟 webp 相关的
-// TODO fix 放这个模块不合适
+/**
+ * 缓存，跟 webp 相关的
+ * @memberof module:tencent/imutils
+ * @TODO fix 放这个模块不合适
+ */
 function imgHashCache(src, useWebP, isSupported) {
   const imgCache = storage.get(IMGCACHEKEY) || {};
   if (useWebP && isSupported) {

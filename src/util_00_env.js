@@ -1,6 +1,14 @@
 import storage from './util_05_storage';
 
+/**
+ * @description 是否是浏览器环境
+ * @memberof module:tencent/imutils
+ */
 const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
+/**
+ * @description 是否是NodeJs服务器环境
+ * @memberof module:tencent/imutils
+ */
 const isServer = !isClient;
 
 // 检测是否支持webp ===========
@@ -8,6 +16,7 @@ let supportedWebPIsLoading;
 let supportedWebP;
 const KEYFORISSUPPORTEDWEBP = 'ISSUPPORTEDWEBP';
 
+/** @ignore */
 function doCheckIsSupportedWebP() {
   // 正在检测
   if (supportedWebPIsLoading) {
@@ -33,7 +42,11 @@ function doCheckIsSupportedWebP() {
   };
   img.src = src;
 }
-// 是否支持webP
+
+/**
+ * 是否支持webP
+ * @memberof module:tencent/imutils
+ */
 function isSupportedWebP() {
   if (isServer) {
     return false;
@@ -49,9 +62,13 @@ function isSupportedWebP() {
   }
 }
 
+/**
+ * 是否为 IE 浏览器
+ * @memberof module:tencent/imutils
+ */
 function isIE(ver) {
-  const b = document.createElement('b')
-  b.innerHTML = '<!--[if IE ' + ver + ']><i></i><![endif]-->'
+  const b = document.createElement('b');
+  b.innerHTML = `<!--[if IE ${ver}]><i></i><![endif]-->`;
   return b.getElementsByTagName('i').length === 1;
 }
 

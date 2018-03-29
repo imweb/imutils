@@ -1,7 +1,9 @@
 import { setCookie } from './util_03_cookie';
 import { isWX, isMQQ } from './util_04_ua';
 
-// 实在没有名字的
+/**
+ * @memberof module:tencent/imutils
+ */
 function getBitMapValue(v, map) {
   const ret = [];
   let val;
@@ -21,6 +23,9 @@ function getBitMapValue(v, map) {
   return ret;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function showTips(text) {
   var div = document.createElement("div");
   div.className = 'util_tips';
@@ -63,12 +68,18 @@ function showTips(text) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function hideTips() {
   [...document.querySelectorAll('.util_tips')].forEach((tipsDom) => {
     document.body.removeChild(tipsDom);
   });
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function showTopTips(text) {
   const div = document.createElement('div');
   div.className = 'top-tips';
@@ -77,11 +88,17 @@ function showTopTips(text) {
   document.body.insertBefore(div, document.body.firstChild);
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function setPlCache(pl) { // pagelocation cache
   setCookie({ name: 'plCache', value: pl });
 }
 
-// 比较版本号
+/**
+ * 比较版本号
+ * @memberof module:tencent/imutils
+ */
 function versionfunegt(ver1, ver2) {
   const version1pre = parseFloat(ver1);
   const version2pre = parseFloat(ver2);
@@ -100,10 +117,16 @@ function versionfunegt(ver1, ver2) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getImgUrl(url = '') {
   return url.replace(/^https?:/, '');
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getCourseUrl(cid) {
   let protocol = 'https:';
   if (typeof location !== 'undefined') {
@@ -112,6 +135,9 @@ function getCourseUrl(cid) {
   return `${protocol}//fudao.qq.com/course.html?_bid=2379&course_id=${cid}`;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getTeacherUrl(tid) {
   let protocol = 'https:';
   if (typeof location !== 'undefined') {
@@ -121,6 +147,9 @@ function getTeacherUrl(tid) {
 }
 
 let last = Date.now();
+/**
+ * @memberof module:tencent/imutils
+ */
 function clickLock(callback) {
   const now = Date.now();
   if ((now - last) > 1000) {
@@ -129,7 +158,10 @@ function clickLock(callback) {
   last = now;
 }
 
-// 这是什么鬼，都放到 util 里面了
+/**
+ * @memberof module:tencent/imutils
+ * @todo 这是什么鬼，都放到 util 里面了
+ */
 const photoProgress = {
   hasAddEventListener: false,
   onPhotoProgressCbs: {},
@@ -167,7 +199,9 @@ const photoProgress = {
 };
 
 
-// TODO remove
+/**
+ * @memberof module:tencent/imutils
+ */
 function setShareInfomation(title, desc, link, imgUrl) {
   const opt = {
     title,

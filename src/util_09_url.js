@@ -8,7 +8,10 @@ function getQuery(n) {
   return !m ? '' : decodeURIComponent(m[2]);
 }
 
-// TODO 跟 getQuery 重复了
+/**
+ * @memberof module:tencent/imutils
+ * @todo 跟 getQuery 重复了 
+ */
 function getParams(key) {
   return getQuery(key) || getHash(key);
 }
@@ -59,17 +62,21 @@ function param(obj, sep) {
   return s.join(sep || '&');
 }
 
-// 统一给 url 添加 wv 值
-// 手Q750-阅读内容与消息列表快捷切换
-// eg.
-// addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671')
-// => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483648
-// addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671#header')
-// => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483648#header
-// addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671&_wv=7')
-// => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483655
-// addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767')
-// => http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767
+/**
+ * @memberof module:tencent/imutils
+ * @example
+ * // 统一给 url 添加 wv 值
+ * // 手Q750-阅读内容与消息列表快捷切换
+ * // eg.
+ * addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671')
+ * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483648
+ * addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671#header')
+ * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483648#header
+ * addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671&_wv=7')
+ * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483655
+ * addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767')
+ * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767
+ */
 function addQuickBackWV(url) {
   const {
     base,
@@ -86,7 +93,10 @@ function addQuickBackWV(url) {
   return `${base}?${qs}${hash}`;
 }
 
-// TODO 重构，基于正则的，可能有 bug
+/**
+ * @memberof module:tencent/imutils
+ * @TODO 重构，基于正则的，可能有 bug
+ */
 function updateQueryString(uri, key, value) {
   const re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
   const separator = uri.indexOf('?') !== -1 ? '&' : '?';

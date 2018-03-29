@@ -9,6 +9,9 @@ import {
 import { weiXinApply } from './util_11_wx';
 import { versionfunegt } from './util_07';
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function openUrlByIframe(url, onfail) {
   const ua = navigator.userAgent.toLowerCase();
   const wxVersion = (ua.match(/micromessenger\/(\d+\.\d+\.\d+)(\.\d+)?/i) || [])[1];
@@ -41,6 +44,9 @@ function openUrlByIframe(url, onfail) {
 }
 
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function openAppPage(page, params) {
   if (!window.mqq) {
     return;
@@ -74,6 +80,7 @@ function openAppPage(page, params) {
 
 /**
  * 打开 辅导 app
+ * @memberof module:tencent/imutils
  */
 function openApp({
   id = '',
@@ -101,6 +108,7 @@ function openApp({
 
 /**
  * 检查 辅导 APP 是否已安装
+ * @memberof module:tencent/imutils
  */
 function isAppInstalled(callback) {
   if (window.mqq) {
@@ -133,6 +141,9 @@ function isAppInstalled(callback) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function gotoNativePage(url, prefix = 'tencentk12://openpage/webview?url=') {
   const urlEnd = encodeURIComponent(url);
   if (isFudaoApp()) {
@@ -149,6 +160,9 @@ function gotoNativePage(url, prefix = 'tencentk12://openpage/webview?url=') {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function jumpToNativePage(url) {
   if (isFudaoApp()) {
     openAppPage('webview', {

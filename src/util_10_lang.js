@@ -1,3 +1,6 @@
+/**
+ * @memberof module:tencent/imutils
+ */
 function deepAssign() {
   var options, name, src, copy, copyIsArray, clone,
       target = arguments[0] || {},
@@ -51,12 +54,18 @@ function deepAssign() {
   return target;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 const str = {
   trim(s = '') {
     return s.replace(/(^\s*)|(\s*$)/g, '');
   },
 };
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function addEvent(target, eventType, callback, capture) {
   if (window.addEventListener) {
     target.addEventListener(eventType, callback, capture);
@@ -67,6 +76,9 @@ function addEvent(target, eventType, callback, capture) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function removeEvent(target, eventType, callback, capture) {
   if (window.removeEventListener) {
     target.removeEventListener(eventType, callback, capture);
@@ -77,6 +89,9 @@ function removeEvent(target, eventType, callback, capture) {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getStrLength(strTemp) {
   let sum = 0;
   for (let i = 0; i < strTemp.length; i++) {
@@ -89,16 +104,24 @@ function getStrLength(strTemp) {
   return sum;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getRichStrLength(s) {
   return s.replace(/<img[^\>]*>/g, '^').replace(/&nbsp;/g, '^').length;
 }
 
-// TODO 跟上面的 str 重复了
+/**
+ * @memberof module:tencent/imutils
+ * @todo TODO 跟上面的 str 重复了
+ */
 function trim(s) {
   return s.replace(/^(\s|&nbsp;)*|(\s|&nbsp;)*$/g, '');
 }
 
-
+/**
+ * @memberof module:tencent/imutils
+ */
 function replaceLink(str) {
   return str.replace(/[-a-zA-Z0-9:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,4}\b([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/g, function (all) {
     if (/(p\.qpic\.cn|[789]\.url\.cn)/.test(all)) {
@@ -114,6 +137,9 @@ function replaceLink(str) {
 
 const reBlank = /[\r\n\t]/g;
 const reRichText = /(<\/?img[^>]*>)|(<\/?[^>]*>)/ig; // img + 文本
+/**
+ * @memberof module:tencent/imutils
+ */
 function richTextFilter(s) {
   return s.replace(reBlank, '').replace(reRichText, (all) => {
     if (/<\/?img/i.test(all)) {
@@ -123,7 +149,10 @@ function richTextFilter(s) {
   });
 }
 
-// TODO 重构
+/**
+ * @memberof module:tencent/imutils
+ * @todo 重构
+ */
 function loadScript(url, readyCondition, readyCb) {
   if (typeof readyCondition !== 'function') {
     console.error('需要一个判断加载完成的条件, 类型为函数');
@@ -156,7 +185,7 @@ function loadScript(url, readyCondition, readyCb) {
 }
 
 /**
- * usage: jsonp('http://sas.qq.com/api_url')
+ * @memberof module:tencent/imutils
  */
 function jsonp(url, callback, opt = {}) {
   let id = ('jsonp' + Math.random() * new Date()).replace('.', '');
@@ -181,6 +210,9 @@ function jsonp(url, callback, opt = {}) {
   };
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function fillZero(v) {
   if (v < 10) {
     return `0${v}`;

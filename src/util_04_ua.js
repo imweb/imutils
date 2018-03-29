@@ -1,5 +1,3 @@
-// module UA
-
 import { isServer } from './util_00_env';
 import { getCookie } from './util_03_cookie';
 
@@ -10,32 +8,46 @@ const UA = isServer ? '' : (navigator.userAgent.toLowerCase() || '');
 const isWeixin = UA.indexOf('micromessenger') !== -1;
 const isQQ = UA.indexOf('mqqbrowser') !== -1;
 
-// 是否QQ登陆
+/**
+ * 是否QQ登陆
+ * @memberof module:tencent/imutils
+ */
 const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 
-// 获取qq uin
+/**
+ * 获取qq uin
+ * @memberof module:tencent/imutils
+ */
 function getQQUin() {
   const uin = getCookie('p_uin') || getCookie('uin');
   const realUin = (uin.length > 14) ? uin : parseInt(uin.replace(/[^\d]/g, ''), 10);
   return !realUin ? '' : realUin;
 }
 
-// 兼容微信和QQ
+/**
+ * 兼容微信和QQ
+ * @memberof module:tencent/imutils
+ */
 function getUin() {
   return (!isQQLogin) ? getCookie('uid_uin') || getQQUin() : getQQUin();
 }
 
-// 获取登录态字段
+/**
+ * 获取登录态字段
+ * @memberof module:tencent/imutils
+ */
 function getAuth() {
   return (!isQQLogin) ? getCookie('uid_a2') || getSkey() : getSkey();
 }
 
-// 优先使用p_skey
+/**
+ * 优先使用p_skey
+ * @memberof module:tencent/imutils
+ */
 function getSkey() {
   return getCookie('p_skey') || getCookie('skey');
 }
 
-// 生成bkn
 function encryptSkey(str) {
   if (!str) {
     return '';
@@ -47,34 +59,55 @@ function encryptSkey(str) {
   return hash & 0x7fffffff;
 }
 
-// 获取bkn
+/**
+ * 获取bkn
+ * @memberof module:tencent/imutils
+ */
 function getBkn() {
   return encryptSkey(getAuth());
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function isPC() {
   return !/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
 }
 
-// TODO 删除这个方法
+/**
+ * @memberof module:tencent/imutils
+ * @TODO 删除这个方法
+ */
 function isWX() {
   return isWeixin;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function isMQQ() {
   return /qq\/(\d+\.\d+)/i.test(navigator.userAgent.toLowerCase());
 }
 
 const REGEXP_FUDAO_APP = /EducationApp/;
+/**
+ * @memberof module:tencent/imutils
+ */
 function isFudaoApp() {
   return REGEXP_FUDAO_APP.test(navigator.userAgent);
 }
 
-// TODO 这个是做什么的？
+/**
+ * @memberof module:tencent/imutils
+ * @TODO TODO 这个是做什么的？
+ */
 function versionCodeZero() {
   return /VersionCode\/0/.test(navigator.userAgent);
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getAppVersion() {
   if (!isFudaoApp()) {
     return 0;
@@ -83,6 +116,9 @@ function getAppVersion() {
   return version || 0;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getPlatForm() {
   if (isFudaoApp()) {
     if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
@@ -97,6 +133,9 @@ function getPlatForm() {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getTerminal() {
   if (isFudaoApp()) {
     if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
@@ -111,6 +150,9 @@ function getTerminal() {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getPlatformCode() {
   if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
     return 1;
@@ -121,6 +163,9 @@ function getPlatformCode() {
   }
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getIOSVersion() {
   const { userAgent = '' } = navigator;
   if (userAgent.indexOf('iPhone') === -1 &&
@@ -160,11 +205,13 @@ function getEncodedURL(h, g, k, fuin) {
 }
 
 /**
- * TODO 重构
+ * @memberof module:tencent/imutils
+ * @description
  * appid:
  * 0           直接打开群aio
  * 21          群视频
  * 1101123802  群课程表
+ * @TODO 重构
  */
 function getTencentURL(type, obj) {
   var h, g, k;
@@ -200,8 +247,11 @@ function getTencentURL(type, obj) {
   return '';
 }
 
-// 获取IE版本号
-// from https://codepen.io/gapcode/pen/vEJNZN
+/**
+ * 获取IE版本号
+ * @memberof module:tencent/imutils
+ * @see https://codepen.io/gapcode/pen/vEJNZN
+ */
 function getIEVer() {
   const ua = window.navigator.userAgent;
   const msie = ua.indexOf('MSIE ');
@@ -227,7 +277,10 @@ function getIEVer() {
   return false;
 }
 
-// 获取safari版本号
+/**
+ * 获取safari版本号
+ * @memberof module:tencent/imutils
+ */
 function getSafariVer() {
   const matchVer = navigator.userAgent.match(/Version\/([\d\.]+).*Safari/);
 
@@ -238,7 +291,10 @@ function getSafariVer() {
   return false;
 }
 
-// 获取Firefox版本号
+/**
+ * 获取Firefox版本号
+ * @memberof module:tencent/imutils
+ */
 function getFirefoxVer() {
   const matchVer = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
   if (matchVer) {
@@ -247,11 +303,17 @@ function getFirefoxVer() {
   return false;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function getTeacherClient() {
   const version = (/TXK12\/(\d+)/.exec(navigator.userAgent) || [])[1];
   return version || 0;
 }
 
+/**
+ * @memberof module:tencent/imutils
+ */
 function isIphoneX() {
   return window.screen.width === 375 && window.screen.height === 812;
 }
@@ -280,5 +342,4 @@ export {
   getFirefoxVer,
   getTeacherClient,
   isIphoneX,
-  setShareInfomation,
 };
