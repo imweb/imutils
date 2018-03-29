@@ -1,6 +1,9 @@
 /*global env: true */
 "use strict"
 
+const ls = require('ls')
+const Path = require('path')
+
 var doop = require("jsdoc/util/doop")
 var fs = require("jsdoc/fs")
 var helper = require("jsdoc/util/templateHelper")
@@ -186,7 +189,7 @@ function addSignatureReturns(f) {
 
   f.signature =
     '<span class="signature">' +
-    (f.signature || "") +
+     (f.signature || "") +
     "</span>" +
     '<span class="type-signature">' +
     returnTypesString +
@@ -199,7 +202,7 @@ function addSignatureTypes(f) {
   f.signature =
     (f.signature || "") +
     '<span class="type-signature">' +
-    (types.length ? " :" + types.join("|") : "") +
+     (types.length ? " :" + types.join("|") : "") +
     "</span>"
 }
 
@@ -216,9 +219,9 @@ function addAttribs(f) {
 function shortenPaths(files, commonPrefix) {
   Object.keys(files).forEach(function(file) {
     files[file].shortened = files[file].resolved
-      .replace(commonPrefix, "")
-      // always use forward slashes
-      .replace(/\\/g, "/")
+                                       .replace(commonPrefix, "")
+    // always use forward slashes
+                                       .replace(/\\/g, "/")
   })
 
   return files
@@ -230,20 +233,38 @@ function getPathFromDoclet(doclet) {
   }
 
   return doclet.meta.path && doclet.meta.path !== "null"
-    ? path.join(doclet.meta.path, doclet.meta.filename)
-    : doclet.meta.filename
+       ? path.join(doclet.meta.path, doclet.meta.filename)
+       : doclet.meta.filename
 }
 
-function generate(type, title, docs, filename, resolveLinks) {
+function getJSONVersions() {
+  return new Promise(function(resolve, reject) {
+    const ret = []
+    const dir = Path.resolve(process.cwd(), 'api', '*')
+    const all = ls(
+      dir,
+      { recurse: false },
+      /\d+\.\d+\.\d+/
+    );
+    for (var file of all) {
+      ret.push(file.file);
+    }
+    resolve(JSON.stringify(ret))
+  })
+}
+
+async function generate(type, title, docs, filename, resolveLinks) {
   resolveLinks = resolveLinks === false ? false : true
+  const versons = await getJSONVersions()
 
   var docData = {
     type: type,
     title: title,
     docs: docs,
+    versions: versons,
   }
   var outpath = path.join(outdir, filename),
-    html = view.render("container.tmpl", docData)
+      html = view.render("container.tmpl", docData)
 
   if (resolveLinks) {
     html = helper.resolveLinks(html) // turn {@link foo} into <a href="foodoc.html">foo</a>
@@ -304,8 +325,8 @@ function attachModuleSymbols(doclets, modules) {
   return modules.map(function(module) {
     if (symbols[module.longname]) {
       module.modules = symbols[module.longname]
-        // Only show symbols that have a description. Make an exception for classes, because
-        // we want to show the constructor-signature heading no matter what.
+      // Only show symbols that have a description. Make an exception for classes, because
+      // we want to show the constructor-signature heading no matter what.
         .filter(function(symbol) {
           return symbol.description || symbol.kind === "class"
         })
@@ -341,7 +362,8 @@ function buildNav(members) {
   var seen = {}
   var seenTutorials = {}
 
-  nav.push(buildNavLink('home', '<a href="index.html">Home</a>'))
+  // 去掉 index.html 的入口
+  // nav.push(buildNavLink('home', '<a href="index.html">关于</a>'))
 
   nav = nav.concat(buildMemberNav(members.tutorials, "Tutorials", seenTutorials, linktoTutorial))
   nav = nav.concat(buildMemberNav(members.classes, "Classes", seen, linkto))
@@ -505,9 +527,9 @@ function buildNavType (type, typeLink) {
 }
 
 /**
-  @param {TAFFY} taffyData See <http://taffydb.com/>.
-  @param {object} opts
-  @param {Tutorial} tutorials
+   @param {TAFFY} taffyData See <http://taffydb.com/>.
+   @param {object} opts
+   @param {Tutorial} tutorials
  */
 exports.publish = function(taffyData, opts, tutorials) {
   data = taffyData
@@ -527,11 +549,11 @@ exports.publish = function(taffyData, opts, tutorials) {
   helper.registerLink("global", globalUrl)
   // set up templating
   view.layout = conf.default.layoutFile
-    ? path.getResourcePath(
-        path.dirname(conf.default.layoutFile),
-        path.basename(conf.default.layoutFile)
-      )
-    : "layout.tmpl"
+              ? path.getResourcePath(
+                path.dirname(conf.default.layoutFile),
+                path.basename(conf.default.layoutFile)
+              )
+              : "layout.tmpl"
 
   // set up tutorials for helper
   helper.setTutorials(tutorials)
@@ -612,7 +634,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     // The canonical property name is `include`. We accept `paths` for backwards compatibility
     // with a bug in JSDoc 3.2.x.
     staticFilePaths = conf.default.staticFiles.include ||
-    conf.default.staticFiles.paths || []
+                      conf.default.staticFiles.paths || []
     staticFileFilter = new (require("jsdoc/src/filter").Filter)(
       conf.default.staticFiles
     )
@@ -721,7 +743,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
   generate(
     "",
-    "Home",
+    "关于",
     packages
       .concat([
         {

@@ -47,6 +47,34 @@
        background-color: #c5c5c5;
      }
     </style>
+    <script>
+     (function() {
+       var VERSIONS = <?js=versions ?>;
+       function renderVersions() {
+         var el = document.getElementById('versions');
+         var select = document.createElement('select');
+         var selectedIndex = 0;
+         var pathname = location.pathname;
+         var versionOld;
+         VERSIONS.forEach(function(v, i) {
+           if (pathname.indexOf(v) > -1) {
+             versionOld = v;
+             selectedIndex = i;
+           }
+           select.options.add(new Option(v,v));
+         });
+         select.selectedIndex = selectedIndex;
+         el.appendChild(select);
+         select.addEventListener('change', function(e) {
+           var versionNew = e.target.value;
+           var pathname = location.pathname;
+           window.location = pathname.replace(versionOld, versionNew);
+           versionOld = versionNew;
+         })
+       }
+       window.addEventListener('load', renderVersions, false);
+     })();
+    </script>
   </head>
   <body>
 
@@ -58,12 +86,17 @@
     <label for="nav-trigger" class="overlay"></label>
 
     <nav>
-      <?js= this.nav ?>
+      <ul>
+        <li class="nav-link nav-home-link" id="versions"></li>
+        <?js= this.nav ?>
+      </ul>
     </nav>
 
     <div id="main">
-      <?js if (title != 'Home') { ?>
-      <h1 class="page-title"><?js= title ?></h1>
+      <?js if (title != '关于') { ?>
+      <h1 class="page-title">
+        <?js= title ?>
+      </h1>
       <?js } ?>
 
       <?js= content ?>
