@@ -17,6 +17,8 @@ function getKey(key) {
 
 /**
  * @memberof module:tencent/imutils
+ * @property {function} set - set(key, val)
+ * @property {function} get - get(key)
  */
 const storage = {
   set: function (key, value) {

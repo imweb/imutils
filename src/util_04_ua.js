@@ -4,8 +4,15 @@ import { getCookie } from './util_03_cookie';
 // 获取ua
 const UA = isServer ? '' : (navigator.userAgent.toLowerCase() || '');
 
-// 是否微信用户
+/**
+ * 是否微信环境
+ * @memberof module:tencent/imutils
+ */
 const isWeixin = UA.indexOf('micromessenger') !== -1;
+/**
+ * 是否QQ环境
+ * @memberof module:tencent/imutils
+ */
 const isQQ = UA.indexOf('mqqbrowser') !== -1;
 
 /**
@@ -17,6 +24,7 @@ const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 /**
  * 获取qq uin
  * @memberof module:tencent/imutils
+ * @return {string}
  */
 function getQQUin() {
   const uin = getCookie('p_uin') || getCookie('uin');
@@ -25,8 +33,9 @@ function getQQUin() {
 }
 
 /**
- * 兼容微信和QQ
+ * 获取用户 uin，兼容微信和QQ
  * @memberof module:tencent/imutils
+ * @return {string} - uin of current user
  */
 function getUin() {
   return (!isQQLogin) ? getCookie('uid_uin') || getQQUin() : getQQUin();
@@ -35,6 +44,7 @@ function getUin() {
 /**
  * 获取登录态字段
  * @memberof module:tencent/imutils
+ * @return {string} - get auth info from cookie
  */
 function getAuth() {
   return (!isQQLogin) ? getCookie('uid_a2') || getSkey() : getSkey();
@@ -43,6 +53,7 @@ function getAuth() {
 /**
  * 优先使用p_skey
  * @memberof module:tencent/imutils
+ * @return {string} - get p_skey from cookie
  */
 function getSkey() {
   return getCookie('p_skey') || getCookie('skey');
@@ -62,13 +73,16 @@ function encryptSkey(str) {
 /**
  * 获取bkn
  * @memberof module:tencent/imutils
+ * @return {string} - get encryped auth info from cookie
  */
 function getBkn() {
   return encryptSkey(getAuth());
 }
 
 /**
+ * TODO 这里不严谨，不是 iPhone ipad android 就是 PC 吗，黑莓呢？
  * @memberof module:tencent/imutils
+ * @return {bool}
  */
 function isPC() {
   return !/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
@@ -76,6 +90,7 @@ function isPC() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {bool}
  * @TODO 删除这个方法
  */
 function isWX() {
@@ -84,6 +99,7 @@ function isWX() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {bool}
  */
 function isMQQ() {
   return /qq\/(\d+\.\d+)/i.test(navigator.userAgent.toLowerCase());
@@ -92,14 +108,17 @@ function isMQQ() {
 const REGEXP_FUDAO_APP = /EducationApp/;
 /**
  * @memberof module:tencent/imutils
+ * @return {bool}
  */
 function isFudaoApp() {
   return REGEXP_FUDAO_APP.test(navigator.userAgent);
 }
 
 /**
+ * 判断 version code 是不是 0
  * @memberof module:tencent/imutils
- * @TODO TODO 这个是做什么的？
+ * @return {bool}
+ * @TODO 这个用在什么场景下？
  */
 function versionCodeZero() {
   return /VersionCode\/0/.test(navigator.userAgent);
@@ -107,6 +126,7 @@ function versionCodeZero() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {string}
  */
 function getAppVersion() {
   if (!isFudaoApp()) {
@@ -117,7 +137,9 @@ function getAppVersion() {
 }
 
 /**
+ * 获取平台信息
  * @memberof module:tencent/imutils
+ * @return {('ios'|'android'|'h5'|'navigator.platform')}
  */
 function getPlatForm() {
   if (isFudaoApp()) {
@@ -135,6 +157,7 @@ function getPlatForm() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {('ios_h5'|'android_h5'|'h5'|'pc_h5')}
  */
 function getTerminal() {
   if (isFudaoApp()) {
@@ -152,19 +175,20 @@ function getTerminal() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {(1|2|3)} - 1 -> iOS device 2 -> android device 3 -> other
  */
 function getPlatformCode() {
   if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
     return 1;
   } else if (/Android/i.test(navigator.userAgent)) {
     return 2;
-  } else {
-    return 3;
   }
+  return 3;
 }
 
 /**
  * @memberof module:tencent/imutils
+ * @return {string}
  */
 function getIOSVersion() {
   const { userAgent = '' } = navigator;
@@ -206,12 +230,15 @@ function getEncodedURL(h, g, k, fuin) {
 
 /**
  * @memberof module:tencent/imutils
- * @description
- * appid:
- * 0           直接打开群aio
- * 21          群视频
- * 1101123802  群课程表
- * @TODO 重构
+ * @description 获取tencent串
+ * @param {string} type
+ * @param {object} obj
+ * @param {string} obj.gc
+ * @param {string} obj.guin
+ * @param {string} obj.appId
+ * @param {string} obj.courseId
+ * @return {string}
+ * @TODO 看着晕，重构
  */
 function getTencentURL(type, obj) {
   var h, g, k;
@@ -251,6 +278,7 @@ function getTencentURL(type, obj) {
  * 获取IE版本号
  * @memberof module:tencent/imutils
  * @see https://codepen.io/gapcode/pen/vEJNZN
+ * @return {number}
  */
 function getIEVer() {
   const ua = window.navigator.userAgent;
@@ -280,6 +308,7 @@ function getIEVer() {
 /**
  * 获取safari版本号
  * @memberof module:tencent/imutils
+ * @return {number|bool}
  */
 function getSafariVer() {
   const matchVer = navigator.userAgent.match(/Version\/([\d\.]+).*Safari/);
@@ -294,6 +323,7 @@ function getSafariVer() {
 /**
  * 获取Firefox版本号
  * @memberof module:tencent/imutils
+ * @return {number|bool}
  */
 function getFirefoxVer() {
   const matchVer = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
@@ -305,6 +335,7 @@ function getFirefoxVer() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {number}
  */
 function getTeacherClient() {
   const version = (/TXK12\/(\d+)/.exec(navigator.userAgent) || [])[1];
@@ -313,6 +344,7 @@ function getTeacherClient() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {bool}
  */
 function isIphoneX() {
   return window.screen.width === 375 && window.screen.height === 812;

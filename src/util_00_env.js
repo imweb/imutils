@@ -46,6 +46,8 @@ function doCheckIsSupportedWebP() {
 /**
  * 是否支持webP
  * @memberof module:tencent/imutils
+ * @todo 此方法有 bug 第一次判断都是返回 false
+ * @return {bool}
  */
 function isSupportedWebP() {
   if (isServer) {
@@ -65,6 +67,8 @@ function isSupportedWebP() {
 /**
  * 是否为 IE 浏览器
  * @memberof module:tencent/imutils
+ * @param {number} ver IE 版本号 6 7 8 9
+ * @return {bool}
  */
 function isIE(ver) {
   const b = document.createElement('b');

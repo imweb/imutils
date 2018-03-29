@@ -1,8 +1,10 @@
 import { isServer } from './util_00_env';
 
 /**
- * 获取cookie
+ * 获取cookie，会对 cookie value 进行 decodeURIComponent
  * @memberof module:tencent/imutils
+ * @param {string} name
+ * @return {string}
  */
 function getCookie(name) {
   if (isServer) {
@@ -13,8 +15,18 @@ function getCookie(name) {
 }
 
 /**
+ * @typedef {Object} cookieOption
+ * @property {string} name - nameof cookie
+ * @property {string} value - value of cookie
+ * @property {timestamp} time - expire time of cookie
+ * @property {domain} domain - cookie目标域名
+ */
+
+/**
  * 设置 cookie
  * @memberof module:tencent/imutils
+ * @param {cookieOption} opt
+ * @return {void}
  */
 function setCookie(opt) {
   if (isServer) {
@@ -30,6 +42,10 @@ function setCookie(opt) {
 /**
  * 删除 cookie
  * @memberof module:tencent/imutils
+ * @param {string} name - name of cookie
+ * @param {string} domain - domain of cookie
+ * @param {string} path - path of cookie
+ * @return {void}
  */
 function delCookie(name, domain, path) {
   if (isServer) {
