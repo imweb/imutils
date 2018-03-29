@@ -8,7 +8,7 @@
     "lint:fix": "eslint --fix *.js h5 client lib src",
     "precommit": "npm run lint",
     "test": "jest --coverage",
-    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+    "doc": "node jsdoc.js"
   },
   "repository": {
     "type": "git",
