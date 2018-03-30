@@ -201,6 +201,7 @@ function getIOSVersion() {
 /**
  * helper for getTencentURL
  * @param {string} k
+ * @ignore
  * @returns {string}
  */
 function encodeParam(k) {
@@ -219,6 +220,7 @@ function encodeParam(k) {
  * @param {string} k
  * @param {string} fuin
  * @returns {string}
+ * @ignore
  */
 function getURL(h, g, k, fuin) {
   if (!h) {
@@ -234,6 +236,7 @@ function getURL(h, g, k, fuin) {
  * @param {string} k
  * @param {string} fuin
  * @returns {string}
+ * @ignore
  */
 function getEncodedURL(h, g, k, fuin) {
   if (!h) {
