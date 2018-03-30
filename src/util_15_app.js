@@ -10,6 +10,9 @@ import { weiXinApply } from './util_11_wx';
 import { versionfunegt } from './util_07';
 
 /**
+ * 通过Iframe打开链接地址
+ * @param {string} url 需要打开的链接
+ * @param {function} onfail 失败的回调
  * @memberof module:tencent/imutils
  */
 function openUrlByIframe(url, onfail) {
@@ -29,15 +32,14 @@ function openUrlByIframe(url, onfail) {
         }
       });
     });
-    return;
   }
 
   const i = document.createElement('iframe');
   i.style.cssText = 'display:none;width:0px;height:0px;';
-  i.onload = function() {
+  i.onload = function () {
     i.parentNode.removeChild(i);
   };
-  i.onerror = function() {};
+  i.onerror = function () {};
 
   i.src = url;
   document.body.appendChild(i);
@@ -45,7 +47,10 @@ function openUrlByIframe(url, onfail) {
 
 
 /**
+ * 打开APP的页面
  * @memberof module:tencent/imutils
+ * @param {string} page
+ * @param {object} params
  */
 function openAppPage(page, params) {
   if (!window.mqq) {
@@ -54,13 +59,13 @@ function openAppPage(page, params) {
 
   params = params || {};
 
-  var url = 'tencentk12://openpage/' + page + '?';
-  for (var i in params) {
+  let url = `tencentk12://openpage/${page}?`;
+  for (const i in params) {
     if (params.hasOwnProperty(i)) {
-      url = url + '&' + i + '=' + params[i];
+      url = `${url}&${i}=${params[i]}`;
     }
   }
-  
+
   const isIos = window.mqq && window.mqq.iOS;
   const isAndroid = window.mqq && window.mqq.android;
   // 安卓11版本后支持openAppPage接口
@@ -89,7 +94,7 @@ function openApp({
     const packageName = {
       name: mqq.iOS ? 'tencentk12' : 'com.tencent.k12',
     };
-    const appDownloadUrl = location.protocol + '//fudao.qq.com/mobile_download.html?qudao=' + id;
+    const appDownloadUrl = `${location.protocol}//fudao.qq.com/mobile_download.html?qudao=${id}`;
     if (mqq.iOS) {
       if (parseInt(getIOSVersion()) >= 9) {
         mqq.app.launchApp(packageName);
@@ -119,8 +124,8 @@ function isAppInstalled(callback) {
       weiXinApply(() => {
         // 微信 6.5.6 之前判断不准
         window.WeixinJSBridge.invoke('getInstallState', {
-          packageUrl: packageName.name + '://',
-          packageName: packageName.name
+          packageUrl: `${packageName.name}://`,
+          packageName: packageName.name,
         }, (res) => {
           if (res.err_msg.match(/yes/ig)) { // 成功
             callback(true);
@@ -130,7 +135,7 @@ function isAppInstalled(callback) {
         });
       });
     } else if (isMQQ()) {
-      mqq.app.isAppInstalled(packageName.name, function(isInstalled) {
+      mqq.app.isAppInstalled(packageName.name, (isInstalled) => {
         callback(isInstalled);
       });
     } else {
@@ -142,6 +147,9 @@ function isAppInstalled(callback) {
 }
 
 /**
+ * 跳转到Native端的地址
+ * @param {string} url url地址
+ * @param {string} prefix=tencentk12://openpage/webview?url=
  * @memberof module:tencent/imutils
  */
 function gotoNativePage(url, prefix = 'tencentk12://openpage/webview?url=') {
@@ -161,6 +169,8 @@ function gotoNativePage(url, prefix = 'tencentk12://openpage/webview?url=') {
 }
 
 /**
+ * 跳转到Native页面
+ * @param {url} url地址
  * @memberof module:tencent/imutils
  */
 function jumpToNativePage(url) {
@@ -170,7 +180,7 @@ function jumpToNativePage(url) {
     });
   } else if (isMQQ()) {
     window.mqq.ui.openUrl({
-      url: url,
+      url,
       target: 1,
     });
   } else {

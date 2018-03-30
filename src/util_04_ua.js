@@ -10,6 +10,7 @@ const isQQ = UA.indexOf('mqqbrowser') !== -1;
 
 /**
  * 是否QQ登陆
+ * @constant
  * @memberof module:tencent/imutils
  */
 const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
@@ -17,6 +18,7 @@ const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 /**
  * 获取qq uin
  * @memberof module:tencent/imutils
+ * @return {string} 返回QQ的uin
  */
 function getQQUin() {
   const uin = getCookie('p_uin') || getCookie('uin');
@@ -27,6 +29,7 @@ function getQQUin() {
 /**
  * 兼容微信和QQ
  * @memberof module:tencent/imutils
+ * @return {string} 返回QQ或者微信的uin
  */
 function getUin() {
   return (!isQQLogin) ? getCookie('uid_uin') || getQQUin() : getQQUin();
@@ -35,6 +38,7 @@ function getUin() {
 /**
  * 获取登录态字段
  * @memberof module:tencent/imutils
+ * @return {string}  返回登录态字段
  */
 function getAuth() {
   return (!isQQLogin) ? getCookie('uid_a2') || getSkey() : getSkey();
@@ -43,6 +47,7 @@ function getAuth() {
 /**
  * 优先使用p_skey
  * @memberof module:tencent/imutils
+ * @return {string}  返回p_skey
  */
 function getSkey() {
   return getCookie('p_skey') || getCookie('skey');
@@ -68,7 +73,9 @@ function getBkn() {
 }
 
 /**
+ * 是否是PC环境
  * @memberof module:tencent/imutils
+ * @return {bool} 是否是PC环境
  */
 function isPC() {
   return !/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent);
@@ -77,13 +84,16 @@ function isPC() {
 /**
  * @memberof module:tencent/imutils
  * @TODO 删除这个方法
+ * @ignore
  */
 function isWX() {
   return isWeixin;
 }
 
 /**
+ * 是否是MQQ
  * @memberof module:tencent/imutils
+ * @return {bool} 是否是MQQ
  */
 function isMQQ() {
   return /qq\/(\d+\.\d+)/i.test(navigator.userAgent.toLowerCase());
@@ -91,7 +101,9 @@ function isMQQ() {
 
 const REGEXP_FUDAO_APP = /EducationApp/;
 /**
+ * 是否是辅导的APP
  * @memberof module:tencent/imutils
+ * @return {bool} 是否是辅导APP
  */
 function isFudaoApp() {
   return REGEXP_FUDAO_APP.test(navigator.userAgent);
@@ -106,7 +118,9 @@ function versionCodeZero() {
 }
 
 /**
+ * 获取当前辅导APP的版本
  * @memberof module:tencent/imutils
+ * @returns {number | string} 如果不是在辅导APP的环境下就返回0，否则返回版本号
  */
 function getAppVersion() {
   if (!isFudaoApp()) {
@@ -117,7 +131,9 @@ function getAppVersion() {
 }
 
 /**
+ * 获取当前环境如：IOS、Android、H5
  * @memberof module:tencent/imutils
+ * @return {string} ios/android/h5
  */
 function getPlatForm() {
   if (isFudaoApp()) {
@@ -134,7 +150,9 @@ function getPlatForm() {
 }
 
 /**
+ * 获取在哪个环境下的H5
  * @memberof module:tencent/imutils
+ * @return {string} ios_h5/android_h5/pc_h5/h5
  */
 function getTerminal() {
   if (isFudaoApp()) {
@@ -151,20 +169,23 @@ function getTerminal() {
 }
 
 /**
+ * 获取当前平台的code代码
  * @memberof module:tencent/imutils
+ * @return {number} 1、2、3
  */
 function getPlatformCode() {
   if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
     return 1;
   } else if (/Android/i.test(navigator.userAgent)) {
     return 2;
-  } else {
-    return 3;
   }
+  return 3;
 }
 
 /**
+ * 获取IOS的版本
  * @memberof module:tencent/imutils
+ * @returns {bool | string} 返回当前IOS的版本号，如果不是IOS则返回false
  */
 function getIOSVersion() {
   const { userAgent = '' } = navigator;
@@ -177,7 +198,11 @@ function getIOSVersion() {
   return userAgent.substring(i, userAgent.indexOf(' ', i)).replace(/_/g, '.');
 }
 
-// helper for getTencentURL
+/**
+ * helper for getTencentURL
+ * @param {string} k
+ * @returns {string}
+ */
 function encodeParam(k) {
   k += '';
   const f = [];
@@ -187,15 +212,29 @@ function encodeParam(k) {
   return f.join('');
 }
 
-// helper for getTencentURL
+/**
+ *  helper for getTencentURL
+ * @param {string} h
+ * @param {string} g
+ * @param {string} k
+ * @param {string} fuin
+ * @returns {string}
+ */
 function getURL(h, g, k, fuin) {
   if (!h) {
     return '';
   }
-  return "tencent://" + h + "/?subcmd=" + g + "&param=" + k + (fuin ? "&fuin=" + fuin : '');
+  return `tencent://${h}/?subcmd=${g}&param=${k}${fuin ? `&fuin=${fuin}` : ''}`;
 }
 
-// helper for getTencentURL
+/**
+ *  helper for getTencentURL
+ * @param {string} h
+ * @param {string} g
+ * @param {string} k
+ * @param {string} fuin
+ * @returns {string}
+ */
 function getEncodedURL(h, g, k, fuin) {
   if (!h) {
     return '';
@@ -214,34 +253,36 @@ function getEncodedURL(h, g, k, fuin) {
  * @TODO 重构
  */
 function getTencentURL(type, obj) {
-  var h, g, k;
-  var t;
+  let h,
+    g,
+    k;
+  let t;
   switch (type) {
     case 'all': // 'all'+gc: 打开群  限制:公开群不在群内, 无法直接打开aio, 而是会弹加群窗口
       h = 'groupwpa';
       g = 'all';
-      k = '{"groupUin":' + obj.gc + ', "timeStamp":1383552440}';
+      k = `{"groupUin":${obj.gc}, "timeStamp":1383552440}`;
       break;
     case 'OpenGroup': // appid 0 打开公开群  限制:非公开群不再群内不会弹加群窗口,而是会弹"群主已将此群设置为非公开，加群后才能继续访问."
       h = 'groupwpa';
       g = 'OpenGroup';
       var appid = obj.appId || 0;
-      k = '{"ExtParam":{"appId":' + appid + '},"groupUin":' + obj.guin + ',"visitor":1}';
+      k = `{"ExtParam":{"appId":${appid}},"groupUin":${obj.guin},"visitor":1}`;
       break;
     case 'VisitPublicGroup': // 5.1以上才支持  限制:几乎无限制, 公开群/非公开群都表现正常(非公开群不在群内打开加群窗口,其他情况都能打开)
       h = 'VisitPublicGroup';
       g = 'VisitPublicGroup';
-      k = '{"ExtParam":{"appId":"0"},"groupUin":' + obj.gc + ',"visitor":1}';
+      k = `{"ExtParam":{"appId":"0"},"groupUin":${obj.gc},"visitor":1}`;
       // k = '{"ExtParam":{"appId":""},"groupUin":' + obj.gc + ',"groupuin":'+ obj.gc +',"visitor":1}';
       break;
     case 'CourseLive': // 5.2以上才支持??
       h = 'VisitPublicGroup';
       g = 'VisitPublicGroupEx';
-      k = '{"ExtParam":{"appId":"21","appParam":"{\\"CourseId\\":' + obj.courseId + '}"},"groupUin":' + obj.gc + ',"visitor":1}';
+      k = `{"ExtParam":{"appId":"21","appParam":"{\\"CourseId\\":${obj.courseId}}"},"groupUin":${obj.gc},"visitor":1}`;
       break;
   }
   if (h) {
-    var fuin = getCookie('uin') || void (0);
+    const fuin = getCookie('uin') || void (0);
     return getEncodedURL(h, g, k, fuin);
   }
   return '';
@@ -251,6 +292,7 @@ function getTencentURL(type, obj) {
  * 获取IE版本号
  * @memberof module:tencent/imutils
  * @see https://codepen.io/gapcode/pen/vEJNZN
+ * @returns {bool | string} 如果是IE就返回IE的版本号，否则返回false
  */
 function getIEVer() {
   const ua = window.navigator.userAgent;
@@ -280,6 +322,7 @@ function getIEVer() {
 /**
  * 获取safari版本号
  * @memberof module:tencent/imutils
+ * @returns {bool | string} 如果是safari就返回safari的版本号，否则返回false
  */
 function getSafariVer() {
   const matchVer = navigator.userAgent.match(/Version\/([\d\.]+).*Safari/);
@@ -294,6 +337,7 @@ function getSafariVer() {
 /**
  * 获取Firefox版本号
  * @memberof module:tencent/imutils
+ * @returns {bool | string} 如果是Firefox就返回Firefox的版本号，否则返回false
  */
 function getFirefoxVer() {
   const matchVer = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
@@ -304,7 +348,9 @@ function getFirefoxVer() {
 }
 
 /**
+ * 获取老师端的版本号
  * @memberof module:tencent/imutils
+ * @return {number | string} 版本号
  */
 function getTeacherClient() {
   const version = (/TXK12\/(\d+)/.exec(navigator.userAgent) || [])[1];
@@ -312,7 +358,9 @@ function getTeacherClient() {
 }
 
 /**
+ * 检测是否是iPhone X
  * @memberof module:tencent/imutils
+ * @return {bool} 是否是iPhone X
  */
 function isIphoneX() {
   return window.screen.width === 375 && window.screen.height === 812;

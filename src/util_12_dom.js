@@ -1,35 +1,43 @@
 /**
  * @memberof module:tencent/imutils
+ * @namespace
  */
 const selectionHandler = {
-  // 保存光标
-  saveSelection: function () {
+  /**
+   *  保存光标
+   * @return {null}
+   */
+  saveSelection() {
     try {
       if (typeof document !== 'undefined' && document.getSelection) {
-        var sel = document.getSelection(), ranges = [];
+        let sel = document.getSelection(),
+          ranges = [];
         if (sel.rangeCount) {
-          for (var i = 0, len = sel.rangeCount; i < len; i++) {
+          for (let i = 0, len = sel.rangeCount; i < len; i++) {
             ranges.push(sel.getRangeAt(i));
           }
         }
         return ranges;
       } else if (typeof document !== 'undefined' && document.selection && document.selection.createRange) {
         return document.selection.type.toLowerCase() !== 'none' ? document.selection.createRange() : null;
-      } else {
-        return null;
       }
+      return null;
     } catch (e) {
       console.log(e);
     }
   },
 
-  //重置光标
+
+  /**
+   * 重置光标
+   * @function
+   */
   restoreSelection: (function () {
     if (typeof document !== 'undefined' && document.getSelection) {
       return function (savedSelection) {
-        var sel = document.getSelection();
+        const sel = document.getSelection();
         sel.removeAllRanges();
-        for (var i = 0, len = savedSelection.length; i < len; i++) {
+        for (let i = 0, len = savedSelection.length; i < len; i++) {
           sel.addRange(savedSelection[i]);
         }
       };
@@ -39,24 +47,30 @@ const selectionHandler = {
           savedSelection.select();
         }
       };
-    } else {
-      return function (savedSelection) {};
     }
-  })(),
-  // 替换光标内容
-  replaceSelection: function (content, EditorSelectorID) {
+    return function (savedSelection) {};
+  }()),
+
+
+  /**
+   * 替换光标内容
+   * @param {any} content
+   * @param {any} EditorSelectorID
+   * @returns {any}
+   */
+  replaceSelection(content, EditorSelectorID) {
     if (!content) {
       return;
     }
 
-    var dom = document.getElementById(EditorSelectorID);
+    const dom = document.getElementById(EditorSelectorID);
     dom.focus();
 
-    var range;
-    var node = typeof content === 'string' ?
-               document.createTextNode(content) : content;
+    let range;
+    const node = typeof content === 'string' ?
+      document.createTextNode(content) : content;
     if (window.getSelection) {
-      var sel = window.getSelection();
+      const sel = window.getSelection();
       if (sel.getRangeAt && sel.rangeCount > 0) {
         range = sel.getRangeAt(0);
         range.deleteContents();
@@ -65,7 +79,7 @@ const selectionHandler = {
         range.insertNode(node);
         range.setStart(node, 0);
 
-        setTimeout(function () {
+        setTimeout(() => {
           if (document.createRange) {
             range = document.createRange();
             range.setStartAfter(node);
@@ -73,7 +87,7 @@ const selectionHandler = {
             sel.removeAllRanges();
             sel.addRange(range);
           } else {
-            var rangeObj = document.body.createTextRange();
+            const rangeObj = document.body.createTextRange();
             rangeObj.moveToElementText(node);
             rangeObj.select();
           }
@@ -125,7 +139,10 @@ function elementMatches(element, selector) {
 }
 
 /**
+ * @param {DOM} element
+ * @param {string} selector 选择器
  * @memberof module:tencent/imutils
+ * @returns {null|DOM}
  */
 function closest(element, selector) {
   while (element && element.nodeType === 1) {
@@ -140,28 +157,31 @@ function closest(element, selector) {
 }
 
 /**
+ * 保证元素可见
+ * @param {DOM} elem DOM元素
+ * @param {DOM} container 父container
  * @memberof module:tencent/imutils
  */
 function ensureVisible(elem, container) {
   // jquery offset原生实现
   function offset(target) {
-    var top = 0,
-        left = 0
+    let top = 0,
+      left = 0;
 
     while (target.offsetParent) {
-      top += target.offsetTop
-      left += target.offsetLeft
-      target = target.offsetParent
+      top += target.offsetTop;
+      left += target.offsetLeft;
+      target = target.offsetParent;
     }
 
     return {
-      top: top,
-      left: left,
+      top,
+      left,
     };
   }
   // elem = $(elem);
   // container = $(container);
-  var top = offset(elem).top - offset(container).top;
+  let top = offset(elem).top - offset(container).top;
   if (!top) {
     return;
   }

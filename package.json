@@ -33,6 +33,7 @@
     "minami": "^1.2.3"
   },
   "dependencies": {
+    "docdash": "^0.4.0",
     "jsdoc": "^3.5.5"
   }
 }
