@@ -1,4 +1,4 @@
-import storage from './util_05_storage';
+import { storage } from './util_05_storage';
 
 function mapReverse(map) {
   for (const k in map) {

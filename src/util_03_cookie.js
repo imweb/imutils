@@ -1,4 +1,5 @@
-import { isServer } from './util_00_env';
+const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
+const isServer = !isClient;
 
 /**
  * 获取cookie，会对 cookie value 进行 decodeURIComponent

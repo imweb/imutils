@@ -1,4 +1,4 @@
-import storage from './util_05_storage';
+import { storage } from './util_05_storage';
 
 /**
  * @description 是否是浏览器环境

@@ -1,8 +1,10 @@
-import { isServer } from './util_00_env';
+// import { isServer } from './util_00_env';
 import { getCookie } from './util_03_cookie';
 
+const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
+
 // 获取ua
-const UA = isServer ? '' : (navigator.userAgent.toLowerCase() || '');
+const UA = !isClient ? '' : (navigator.userAgent.toLowerCase() || '');
 
 /**
  * 是否微信环境
