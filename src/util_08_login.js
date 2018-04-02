@@ -4,11 +4,13 @@ import { delCookie } from './util_03_cookie';
 import { loadScript } from './util_10_lang';
 
 /**
+ * QQ登录的地址
+ * @param {string} succUrl  成功登录的回调地址
  * @memberof module:tencent/imutils
  */
 function qqLogin(succUrl = location) {
-  window.location.href = '//ui.ptlogin2.qq.com/cgi-bin/login?style=9' +
-                         '&appid=716040006&s_url=' + encodeURIComponent(succUrl) + '&low_login=0&daid=444';
+  window.location.href = `${'//ui.ptlogin2.qq.com/cgi-bin/login?style=9' +
+                         '&appid=716040006&s_url='}${encodeURIComponent(succUrl)}&low_login=0&daid=444`;
 }
 
 /**
@@ -32,7 +34,7 @@ function login() {
  * @memberof module:tencent/imutils
  */
 function reLogin() {
-  const hostDomain = (location.hostname.match(/(\.\w+){2}$/) || ['.' + location.hostname])[0];
+  const hostDomain = (location.hostname.match(/(\.\w+){2}$/) || [`.${location.hostname}`])[0];
   const isLoaded = function () {
     return typeof window.pt_logout !== 'undefined';
   };

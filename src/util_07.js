@@ -1,8 +1,13 @@
 import { setCookie } from './util_03_cookie';
 import { isWX, isMQQ } from './util_04_ua';
 
+
 /**
+ * getBitMapValue
  * @memberof module:tencent/imutils
+ * @param {string} v
+ * @param {Array} map
+ * @returns {string}
  */
 function getBitMapValue(v, map) {
   const ret = [];
@@ -24,16 +29,18 @@ function getBitMapValue(v, map) {
 }
 
 /**
+ * 根据传入的text生成tips
  * @memberof module:tencent/imutils
+ * @param {string} text 需要生成tips的text
  */
 function showTips(text) {
-  var div = document.createElement("div");
+  const div = document.createElement('div');
   div.className = 'util_tips';
   div.style.cssText = 'position:fixed; bottom:60px; width:100%; text-align:center;z-index:100;';
   div.style.opacity = '0';
 
-  var span = document.createElement("span");
-  span.className = "util_tips_text";
+  const span = document.createElement('span');
+  span.className = 'util_tips_text';
   span.innerText = text;
   span.style.cssText = 'padding:5px 10px; background-color:rgba(0,0,0,0.4); color:#fff; border-radius:6px;';
 
@@ -42,11 +49,11 @@ function showTips(text) {
   appear();
 
   function appear() {
-    var pointer = setInterval(function () {
-      var op = Math.round(+div.style.opacity * 10) / 10;
+    var pointer = setInterval(() => {
+      const op = Math.round(+div.style.opacity * 10) / 10;
       if (op === 1) {
         clearInterval(pointer);
-        setTimeout(function () {
+        setTimeout(() => {
           disappear();
         }, 2000);
       } else {
@@ -56,8 +63,8 @@ function showTips(text) {
   }
 
   function disappear() {
-    var pointer = setInterval(function () {
-      var op = Math.round(+div.style.opacity * 10) / 10;
+    var pointer = setInterval(() => {
+      const op = Math.round(+div.style.opacity * 10) / 10;
       if (op === 0) {
         clearInterval(pointer);
         document.body.removeChild(div);
@@ -69,6 +76,7 @@ function showTips(text) {
 }
 
 /**
+ * 隐藏Tips
  * @memberof module:tencent/imutils
  */
 function hideTips() {
@@ -78,6 +86,8 @@ function hideTips() {
 }
 
 /**
+ * 显示顶部的tips
+ * @param {string} text 需要在顶部显示的text
  * @memberof module:tencent/imutils
  */
 function showTopTips(text) {
@@ -89,7 +99,9 @@ function showTopTips(text) {
 }
 
 /**
+ * 设置name为plCache的Cookie
  * @memberof module:tencent/imutils
+ * @ignore
  */
 function setPlCache(pl) { // pagelocation cache
   setCookie({ name: 'plCache', value: pl });
@@ -98,34 +110,41 @@ function setPlCache(pl) { // pagelocation cache
 /**
  * 比较版本号
  * @memberof module:tencent/imutils
+ * @param {string} ver1 版本1
+ * @param {string} ver2 版本2
+ * @returns {bool} 如果版本1大于版本2则为true，否则返回false
  */
 function versionfunegt(ver1, ver2) {
   const version1pre = parseFloat(ver1);
   const version2pre = parseFloat(ver2);
-  const version1next = Number(ver1.replace(version1pre + '.', ''));
-  const version2next = Number(ver2.replace(version2pre + '.', ''));
+  const version1next = Number(ver1.replace(`${version1pre}.`, ''));
+  const version2next = Number(ver2.replace(`${version2pre}.`, ''));
   if (version1pre > version2pre) {
     return true;
   } else if (version1pre < version2pre) {
     return false;
-  } else {
-    if (version1next >= version2next) {
-      return true;
-    } else {
-      return false;
-    }
   }
+  if (version1next >= version2next) {
+    return true;
+  }
+  return false;
 }
 
 /**
+ * 获取ImgUrl
  * @memberof module:tencent/imutils
+ * @param {string} url 需要获取Img的URl
+ * @return {string}
  */
 function getImgUrl(url = '') {
   return url.replace(/^https?:/, '');
 }
 
 /**
+ * 根据cid获取课程的URl
+ * @param {number | string } cid
  * @memberof module:tencent/imutils
+ * @return {string} 当前cid的课程Url
  */
 function getCourseUrl(cid) {
   let protocol = 'https:';
@@ -136,18 +155,24 @@ function getCourseUrl(cid) {
 }
 
 /**
+ * 获取老师的Url
+ * @param {number | string } tid
  * @memberof module:tencent/imutils
+ * @return {string} 老师的Url
  */
 function getTeacherUrl(tid) {
   let protocol = 'https:';
   if (typeof location !== 'undefined') {
     protocol = location.protocol;
   }
-  return protocol + '//fudao.qq.com/teacher.html?_bid=2379&tid=' + tid;
+  return `${protocol}//fudao.qq.com/teacher.html?_bid=2379&tid=${tid}`;
 }
 
 let last = Date.now();
+
 /**
+ * 点击锁定？
+ * @param {function} callback 回调函数
  * @memberof module:tencent/imutils
  */
 function clickLock(callback) {
@@ -160,13 +185,13 @@ function clickLock(callback) {
 
 /**
  * @memberof module:tencent/imutils
- * @todo 这是什么鬼，都放到 util 里面了
+ * @ignore
  */
 const photoProgress = {
   hasAddEventListener: false,
   onPhotoProgressCbs: {},
-  on: function(name, fn) {
-    let onPhotoProgressCbs = this.onPhotoProgressCbs;
+  on(name, fn) {
+    const onPhotoProgressCbs = this.onPhotoProgressCbs;
 
     if (!onPhotoProgressCbs[name]) {
       onPhotoProgressCbs[name] = fn;
@@ -193,14 +218,18 @@ const photoProgress = {
       });
     }
   },
-  off: function(name) {
+  off(name) {
     delete this.onPhotoProgressCbs[name];
   },
 };
 
-
 /**
+ * 设置分享的信息
  * @memberof module:tencent/imutils
+ * @param {string} title 标题
+ * @param {string} desc 描述
+ * @param {string} link 链接
+ * @param {string} imgUrl 图片地址
  */
 function setShareInfomation(title, desc, link, imgUrl) {
   const opt = {

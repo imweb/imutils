@@ -1,14 +1,16 @@
 /**
  * @description 转换价格为方便阅读的格式
+ * @param {number}  num 需要转换的数字
  * @memberof module:tencent/imutils
+ * @return {number}
  */
 function formatShortSignUpNum(num) {
   if (num >= 1e7) {
-    return Math.floor(num / 1e7) + '千万';
+    return `${Math.floor(num / 1e7)}千万`;
   } else if (num >= 1e6) {
-    return Math.floor(num / 1e6) + '百万';
+    return `${Math.floor(num / 1e6)}百万`;
   } else if (num >= 1e4) {
-    return Math.floor(num / 1e4) + '万';
+    return `${Math.floor(num / 1e4)}万`;
   }
   return num;
 }
@@ -16,9 +18,6 @@ function formatShortSignUpNum(num) {
 /**
  * @memberof module:tencent/imutils
  * @description 价格展示，如果是 0，则展示免费
- * @param {number} price - 价格
- * @param {bool} nounit - 不展示前缀
- * @return {string}
  * @example
  * price(0)           // => 免费
  * price(1000)        // => ￥10.00
@@ -36,6 +35,7 @@ function price(price, nounit) {
  * @param {number[]} prices - 价格
  * @return {string}
  * @deprecated 不建议放到 imutils
+ * @ignore
  * @todo 移除此方法
  */
 function prices(prices) {
@@ -43,8 +43,8 @@ function prices(prices) {
   const max = prices[prices.length - 1];
 
   // TODO 格式化怎么还包含了 html 标签
-  return (min ? '&yen;' + (min / 100).toFixed(2) : '<em class="z-free">免费</em>') + '-' +
-          (min ? '' : '&yen;') + (max / 100).toFixed(2);
+  return `${min ? `&yen;${(min / 100).toFixed(2)}` : '<em class="z-free">免费</em>'}-${
+    min ? '' : '&yen;'}${(max / 100).toFixed(2)}`;
 }
 
 /**
@@ -103,20 +103,20 @@ function formatTaskTime(time, type = 'short') {
   let dateStr = '';
   let h = date.getHours();
   let m = date.getMinutes();
-  h = h >= 10 ? h : '0' + h;
-  m = m >= 10 ? m : '0' + m;
+  h = h >= 10 ? h : `0${h}`;
+  m = m >= 10 ? m : `0${m}`;
   if (type === 'short') {
-    dateStr = h + ':' + m;
+    dateStr = `${h}:${m}`;
   } else if (type === 'middle') {
-    dateStr = (date.getMonth() + 1) + '月' + date.getDate() + '日 ' + h + ':' + m;
+    dateStr = `${date.getMonth() + 1}月${date.getDate()}日 ${h}:${m}`;
   } else {
-    dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + h + ':' + m;
+    dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${h}:${m}`;
   }
   return dateStr;
 }
 
 function formatTime(m) {
-  return m < 10 ? '0' + m : m;
+  return m < 10 ? `0${m}` : m;
 }
 
 /**
@@ -134,7 +134,7 @@ function translateTimeStamp(time) {
   const h = time.getHours();
   const mm = time.getMinutes();
   const s = time.getSeconds();
-  return y + '-' + formatTime(m) + '-' + formatTime(d) + ' ' + formatTime(h) + ':' + formatTime(mm) + ':' + formatTime(s);
+  return `${y}-${formatTime(m)}-${formatTime(d)} ${formatTime(h)}:${formatTime(mm)}:${formatTime(s)}`;
 }
 
 export {

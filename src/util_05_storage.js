@@ -16,21 +16,42 @@ function getKey(key) {
 }
 
 /**
+ * @namespace
  * @memberof module:tencent/imutils
  * @property {function} set - set(key, val)
  * @property {function} get - get(key)
  */
 const storage = {
-  set: function (key, value) {
+
+  /**
+   * 存储变量
+   * @param {any} key key值
+   * @param {any} value 存储的值
+   */
+  set(key, value) {
     this.setGlobal(getKey(key), {
       v: value,
     });
   },
-  get: function (key) {
+
+
+  /**
+   * 通过key获取值
+   * @param {any} key
+   * @returns {any}
+   */
+  get(key) {
     return (this.getGlobal(getKey(key)) || {}).v;
   },
-  setGlobal: function (key, value) {
-    if (isServer) return;
+
+  /**
+   * 设置全局变量
+   * @param {any} key
+   * @param {any} value
+   * @returns {any}
+   */
+  setGlobal(key, value) {
+    if (isServer) { return; }
     if (window.localStorage) {
       try {
         window.localStorage.setItem(key, JSON.stringify(value));
@@ -39,7 +60,13 @@ const storage = {
       }
     }
   },
-  getGlobal: function (key) {
+
+  /**
+   * 从全局上获取值
+   * @param {any} key
+   * @returns {any}
+   */
+  getGlobal(key) {
     if (isServer) {
       return;
     }

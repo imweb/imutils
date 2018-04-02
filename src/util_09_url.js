@@ -1,16 +1,16 @@
 function getHash(n) {
-  const m = window.location.hash.match(new RegExp('(#|&)' + n + '=([^&]*)(&|$)'));
+  const m = window.location.hash.match(new RegExp(`(#|&)${n}=([^&]*)(&|$)`));
   return !m ? '' : decodeURIComponent(m[2]);
-};
+}
 
 function getQuery(n) {
-  const m = window.location.search.match(new RegExp('(\\?|&)' + n + '=([^&]*)(&|$)'));
+  const m = window.location.search.match(new RegExp(`(\\?|&)${n}=([^&]*)(&|$)`));
   return !m ? '' : decodeURIComponent(m[2]);
 }
 
 /**
  * @memberof module:tencent/imutils
- * @todo 跟 getQuery 重复了 
+ * @todo 跟 getQuery 重复了
  */
 function getParams(key) {
   return getQuery(key) || getHash(key);
@@ -63,7 +63,9 @@ function param(obj, sep) {
 }
 
 /**
+ * 统一给 url 添加 wv 值
  * @memberof module:tencent/imutils
+ * @param {string} url 需要添加wv值得url
  * @example
  * // 统一给 url 添加 wv 值
  * // 手Q750-阅读内容与消息列表快捷切换
@@ -76,6 +78,7 @@ function param(obj, sep) {
  * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2147483655
  * addQuickBackWV('http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767')
  * // => http://m.ke.qq.com/index.html?_bid=1671&_wv=2181046767
+ * @return {string} 处理后的url
  */
 function addQuickBackWV(url) {
   const {
@@ -98,12 +101,12 @@ function addQuickBackWV(url) {
  * @TODO 重构，基于正则的，可能有 bug
  */
 function updateQueryString(uri, key, value) {
-  const re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
+  const re = new RegExp(`([?&])${key}=.*?(&|$)`, 'i');
   const separator = uri.indexOf('?') !== -1 ? '&' : '?';
   if (uri.match(re)) {
-    return uri.replace(re, '$1' + key + '=' + value + '$2');
+    return uri.replace(re, `$1${key}=${value}$2`);
   }
-  return uri + separator + key + '=' + value;
+  return `${uri + separator + key}=${value}`;
 }
 
 export {

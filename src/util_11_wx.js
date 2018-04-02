@@ -1,4 +1,6 @@
 /**
+ * 微信什么？没看懂
+ * @param {func} callback 回调函数
  * @memberof module:tencent/imutils
  */
 function weiXinApply(callback) {
@@ -10,6 +12,4 @@ function weiXinApply(callback) {
   }
 }
 
-export {
-  weiXinApply,
-};
+export { weiXinApply };

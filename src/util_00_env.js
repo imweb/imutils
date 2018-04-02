@@ -3,8 +3,12 @@ import storage from './util_05_storage';
 /**
  * @description 是否是浏览器环境
  * @memberof module:tencent/imutils
+ * @constant
+ * @returns {Bool}
  */
 const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
+
+
 /**
  * @description 是否是NodeJs服务器环境
  * @memberof module:tencent/imutils
@@ -43,11 +47,11 @@ function doCheckIsSupportedWebP() {
   img.src = src;
 }
 
+
 /**
- * 是否支持webP
+ * @description 检测当前环境是否支持WebP
  * @memberof module:tencent/imutils
- * @todo 此方法有 bug 第一次判断都是返回 false
- * @return {bool}
+ * @return {Bool} Is this environment support WebP
  */
 function isSupportedWebP() {
   if (isServer) {

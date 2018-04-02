@@ -12,13 +12,15 @@ import { weiXinApply } from './util_11_wx';
 import { openUrlByIframe, openAppPage } from './util_15_app';
 
 /**
+ * 请求QQ服务
+ * @param {string} serviceQQ 企业QQ号
  * @memberof module:tencent/imutils
  */
 function callService(serviceQQ) {
   const jumpUrl =
-    'mqqapi://im/chat?chat_type=wpa&version=1&uin=' +
-    serviceQQ +
-    '&src_type=web&web_src=fudao.qq.com';
+    `mqqapi://im/chat?chat_type=wpa&version=1&uin=${
+      serviceQQ
+    }&src_type=web&web_src=fudao.qq.com`;
   const noQQTip = '请先安装QQ，再进行咨询';
   if (isFudaoApp()) {
     // android端bug临时修复
@@ -27,7 +29,7 @@ function callService(serviceQQ) {
       window.location.href = jumpUrl;
     } else {
       window.mqq &&
-      window.mqq.invoke('edu', 'isQQWxInstalled', {}, function(data) {
+      window.mqq.invoke('edu', 'isQQWxInstalled', {}, (data) => {
         const res = JSON.parse(data);
         if (+res.isQQInstalled) {
           window.location.href = jumpUrl;
@@ -35,14 +37,14 @@ function callService(serviceQQ) {
           showTips(noQQTip);
         }
       });
-    }
+    }callBussinessQQ;
   } else if (isWX()) {
-    openUrlByIframe(jumpUrl, function() {
+    openUrlByIframe(jumpUrl, () => {
       showTips(noQQTip);
     });
   } else {
     window.location.href = jumpUrl;
-    setTimeout(function() {
+    setTimeout(() => {
       showTips(noQQTip);
     }, 1000);
   }
@@ -50,6 +52,7 @@ function callService(serviceQQ) {
 
 /**
  * 尝试呼起企业QQ
+ * @param {string} serviceQQ 企业QQ号
  * @memberof module:tencent/imutils
  */
 function callBussinessQQ(serviceQQ) {
@@ -73,6 +76,8 @@ function callBussinessQQ(serviceQQ) {
 }
 
 /**
+ * 尝试呼起QQ群
+ * @param {string} url qq群的地址
  * @memberof module:tencent/imutils
  */
 function callQQGroup(url) {
@@ -86,7 +91,7 @@ function callQQGroup(url) {
       window.location.href = jumpUrl;
     } else {
       window.mqq &&
-      window.mqq.invoke('edu', 'isQQWxInstalled', {}, function(data) {
+      window.mqq.invoke('edu', 'isQQWxInstalled', {}, (data) => {
         const res = JSON.parse(data);
         if (+res.isQQInstalled) {
           window.location.href = jumpUrl;
@@ -100,14 +105,14 @@ function callQQGroup(url) {
       name: mqq.iOS ? 'mqqwpa' : 'com.tencent.mobileqq',
     };
 
-    weiXinApply(function() {
+    weiXinApply(() => {
       window.WeixinJSBridge &&
       window.WeixinJSBridge.invoke(
         'getInstallState', {
-          packageUrl: packageName.name + '://',
+          packageUrl: `${packageName.name}://`,
           packageName: packageName.name,
         },
-        function(res) {
+        (res) => {
           if (res.err_msg.match(/yes/gi)) {
             window.location.href = jumpUrl;
           } else {

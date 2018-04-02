@@ -5,7 +5,10 @@ import {
 } from './util_04_ua';
 
 /**
+ * addPageShowListener
  * @memberof module:tencent/imutils
+ * @param {function} listener 监听的函数
+ * @return {null}
  */
 function addPageShowListener(listener) {
   if (isFudaoApp()) {
@@ -39,6 +42,4 @@ function addPageShowListener(listener) {
   }
 }
 
-export {
-  addPageShowListener,
-};
+export { addPageShowListener };
