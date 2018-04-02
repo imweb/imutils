@@ -21,7 +21,7 @@ function getKey(key) {
  * @property {function} set - set(key, val)
  * @property {function} get - get(key)
  */
-const storage = {
+export const storage = {
 
   /**
    * 存储变量
@@ -85,5 +85,3 @@ const storage = {
     return null;
   },
 };
-
-export default storage;
