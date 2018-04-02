@@ -25,11 +25,7 @@ const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 /**
  * 获取qq uin
  * @memberof module:tencent/imutils
-<<<<<<< HEAD
- * @return {string}
-=======
  * @return {string} 返回QQ的uin
->>>>>>> jax
  */
 function getQQUin() {
   const uin = getCookie('p_uin') || getCookie('uin');
