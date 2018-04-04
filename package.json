@@ -2,7 +2,7 @@
   "name": "@tencent/imutils",
   "version": "0.1.17",
   "description": "企鹅辅导工具库",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint *.js h5 client lib",
     "lint:fix": "eslint --fix *.js h5 client lib src",

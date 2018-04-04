@@ -290,9 +290,12 @@ function getTutorial(num) {
   return tutorial[num];
 }
 
+const SUBJECTS2 = SUBJECTS;
+
 export {
   CourseType,
   SUBJECTS,
+  SUBJECTS2,
   grade, // deprecated use GRADES please
   GRADES,
   getSavedSubject,
