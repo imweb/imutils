@@ -70,6 +70,8 @@ import {
   qqLogin,
   wxLogin,
   login,
+  reLogin,
+  toLogin,
 } from './util_08_login';
 
 import {
@@ -196,9 +198,11 @@ module.exports = {
   translateTimeStamp,
   formatDate,
   formatTaskTime,
-  login,
   qqLogin,
   wxLogin,
+  login,
+  reLogin,
+  toLogin,
   getQuery,
   getHash,
   getParams,

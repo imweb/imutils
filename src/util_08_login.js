@@ -1,7 +1,9 @@
 // TODO lint fix
 
 import { delCookie } from './util_03_cookie';
+import { isFudaoApp } from './util_04_ua';
 import { loadScript } from './util_10_lang';
+import { openAppPage } from './util_15_app';
 
 /**
  * QQ登录的地址
@@ -50,9 +52,18 @@ function reLogin() {
   });
 }
 
+function toLogin() {
+  if (isFudaoApp()) {
+    openAppPage('login');
+  } else {
+    qqLogin(location.href);
+  }
+}
+
 export {
   qqLogin,
   wxLogin,
   login,
   reLogin,
+  toLogin,
 };
