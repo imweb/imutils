@@ -78,6 +78,7 @@ import {
   getHash,
   parseQueryString,
   updateQueryString,
+  addQuickBackWV,
 } from './util_09_url';
 
 import {
@@ -203,6 +204,7 @@ module.exports = {
   getParams,
   parseQueryString,
   updateQueryString,
+  addQuickBackWV,
   // lang
   deepAssign,
   str,
