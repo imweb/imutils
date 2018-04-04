@@ -1,26 +1,3 @@
-import {
-  getBitMapValue,
-  showTips,
-  hideTips,
-  showTopTips,
-  setPlCache,
-  getCourseUrl,
-  getTeacherUrl,
-  setShareInfomation
-} from "./src/util_07";
-import { qqLogin, reLogin } from "./src/util_08_login";
-import { getQuery, getParams } from "./src/util_09_url";
-import {
-  deepAssign,
-  addEvent,
-  removeEvent,
-  getStrLength,
-  getRichStrLength,
-  replaceLink
-} from "./src/util_10_lang";
-import { closest } from "./src/util_12_dom";
-import { getSubjectShortName } from "./src/util_13_constant";
-
 export interface CookieOption {
   value: string;
   time: string | number;
@@ -399,7 +376,7 @@ export interface ImutilsStatic {
   addEvent(
     target: HTMLElement,
     eventType: string,
-    callback: function,
+    callback: Function,
     capture: boolean
   );
 
@@ -414,7 +391,7 @@ export interface ImutilsStatic {
   removeEvent(
     target: HTMLElement,
     eventType: string,
-    callback: function,
+    callback: Function,
     capture: boolean
   );
 
