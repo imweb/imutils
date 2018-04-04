@@ -4,7 +4,7 @@
     },
     "source": {
         "include": ["src/", "README.md"],
-        "exclude": ["lib/*.js", "h5/*.js"]
+        "exclude": ["lib/*.js", "h5/*.js", "index.d.ts"]
     },
     "plugins": [],
     "templates": {
