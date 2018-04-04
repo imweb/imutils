@@ -48,7 +48,7 @@ import {
   isIphoneX,
 } from './util_04_ua';
 
-import storage from './util_05_storage';
+import { storage } from './util_05_storage';
 import { imgHashCache } from './util_06_img';
 
 import {
@@ -70,6 +70,8 @@ import {
   qqLogin,
   wxLogin,
   login,
+  reLogin,
+  toLogin,
 } from './util_08_login';
 
 import {
@@ -78,6 +80,7 @@ import {
   getHash,
   parseQueryString,
   updateQueryString,
+  addQuickBackWV,
 } from './util_09_url';
 
 import {
@@ -195,14 +198,17 @@ module.exports = {
   translateTimeStamp,
   formatDate,
   formatTaskTime,
-  login,
   qqLogin,
   wxLogin,
+  login,
+  reLogin,
+  toLogin,
   getQuery,
   getHash,
   getParams,
   parseQueryString,
   updateQueryString,
+  addQuickBackWV,
   // lang
   deepAssign,
   str,

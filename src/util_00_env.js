@@ -1,4 +1,4 @@
-import storage from './util_05_storage';
+import { storage } from './util_05_storage';
 
 /**
  * @description 是否是浏览器环境
@@ -71,6 +71,8 @@ function isSupportedWebP() {
 /**
  * 是否为 IE 浏览器
  * @memberof module:tencent/imutils
+ * @param {number} ver IE 版本号 6 7 8 9
+ * @return {bool}
  */
 function isIE(ver) {
   const b = document.createElement('b');

@@ -137,7 +137,7 @@ function showDialog(tipText, option) {
   };
 
   // option = $.extend(defaultOption, option);
-  option = { ...defaultOption, ...option };
+  option = Object.assign({}, defaultOption, option);
 
   if (isMQQ() && window.mqq) {
     const { mqq } = window;

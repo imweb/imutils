@@ -1,11 +1,20 @@
-import { isServer } from './util_00_env';
+// import { isServer } from './util_00_env';
 import { getCookie } from './util_03_cookie';
 
-// 获取ua
-const UA = isServer ? '' : (navigator.userAgent.toLowerCase() || '');
+const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
 
-// 是否微信用户
+// 获取ua
+const UA = !isClient ? '' : (navigator.userAgent.toLowerCase() || '');
+
+/**
+ * 是否微信环境
+ * @memberof module:tencent/imutils
+ */
 const isWeixin = UA.indexOf('micromessenger') !== -1;
+/**
+ * 是否QQ环境
+ * @memberof module:tencent/imutils
+ */
 const isQQ = UA.indexOf('mqqbrowser') !== -1;
 
 /**
@@ -27,7 +36,7 @@ function getQQUin() {
 }
 
 /**
- * 兼容微信和QQ
+ * 获取用户 uin，兼容微信和QQ
  * @memberof module:tencent/imutils
  * @return {string} 返回QQ或者微信的uin
  */
@@ -67,6 +76,7 @@ function encryptSkey(str) {
 /**
  * 获取bkn
  * @memberof module:tencent/imutils
+ * @return {string} - get encryped auth info from cookie
  */
 function getBkn() {
   return encryptSkey(getAuth());
@@ -83,6 +93,7 @@ function isPC() {
 
 /**
  * @memberof module:tencent/imutils
+ * @return {bool}
  * @TODO 删除这个方法
  * @ignore
  */
@@ -110,8 +121,10 @@ function isFudaoApp() {
 }
 
 /**
+ * 判断 version code 是不是 0
  * @memberof module:tencent/imutils
- * @TODO TODO 这个是做什么的？
+ * @return {bool}
+ * @TODO 这个用在什么场景下？
  */
 function versionCodeZero() {
   return /VersionCode\/0/.test(navigator.userAgent);
@@ -170,7 +183,6 @@ function getTerminal() {
 
 /**
  * 获取当前平台的code代码
- * @memberof module:tencent/imutils
  * @return {number} 1、2、3
  */
 function getPlatformCode() {
@@ -201,6 +213,7 @@ function getIOSVersion() {
 /**
  * helper for getTencentURL
  * @param {string} k
+ * @ignore
  * @returns {string}
  */
 function encodeParam(k) {
@@ -219,6 +232,7 @@ function encodeParam(k) {
  * @param {string} k
  * @param {string} fuin
  * @returns {string}
+ * @ignore
  */
 function getURL(h, g, k, fuin) {
   if (!h) {
@@ -234,6 +248,7 @@ function getURL(h, g, k, fuin) {
  * @param {string} k
  * @param {string} fuin
  * @returns {string}
+ * @ignore
  */
 function getEncodedURL(h, g, k, fuin) {
   if (!h) {
@@ -245,12 +260,15 @@ function getEncodedURL(h, g, k, fuin) {
 
 /**
  * @memberof module:tencent/imutils
- * @description
- * appid:
- * 0           直接打开群aio
- * 21          群视频
- * 1101123802  群课程表
- * @TODO 重构
+ * @description 获取tencent串
+ * @param {string} type
+ * @param {object} obj
+ * @param {string} obj.gc
+ * @param {string} obj.guin
+ * @param {string} obj.appId
+ * @param {string} obj.courseId
+ * @return {string}
+ * @TODO 看着晕，重构
  */
 function getTencentURL(type, obj) {
   let h,

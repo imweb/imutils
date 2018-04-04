@@ -18,8 +18,6 @@ function formatShortSignUpNum(num) {
 /**
  * @memberof module:tencent/imutils
  * @description 价格展示，如果是 0，则展示免费
- * @param {number} price
- * @param {bool} nounit
  * @example
  * price(0)           // => 免费
  * price(1000)        // => ￥10.00
@@ -34,6 +32,8 @@ function price(price, nounit) {
 /**
  * 价格格式化
  * @memberof module:tencent/imutils
+ * @param {number[]} prices - 价格
+ * @return {string}
  * @deprecated 不建议放到 imutils
  * @ignore
  * @todo 移除此方法
@@ -50,9 +50,9 @@ function prices(prices) {
 /**
  * 日期格式化
  * @memberof module:tencent/imutils
- * @param {String} pattern 日期格式 (格式化字符串的符号参考w3标准 http://www.w3.org/TR/NOTE-datetime)
- * @param {Date} date 待格式化的日期对象
- * @return {String} 格式化后的日期字符串
+ * @param {String} pattern - 日期格式 (格式化字符串的符号参考w3标准 http://www.w3.org/TR/NOTE-datetime)
+ * @param {Date} date - 待格式化的日期对象
+ * @return {String} - 格式化后的日期字符串
  * @example
  * const now = new Date();
  * formatDate("YYYY-MM-DD hh:mm:ss", now);
@@ -93,6 +93,9 @@ function formatDate(pattern, date) {
 /**
  * 格式化任务的时间
  * @memberof module:tencent/imutils
+ * @param {number} time - 单位是 s
+ * @param {string} type - 不知道怎么描述
+ * @return {string}
  * @deprecated 请使用 formatDate
  */
 function formatTaskTime(time, type = 'short') {
@@ -116,6 +119,13 @@ function formatTime(m) {
   return m < 10 ? `0${m}` : m;
 }
 
+/**
+ * 格式化时间戳
+ * @memberof module:tencent/imutils
+ * @param {number} time - 单位是 s
+ * @return {string}
+ * @deprecated 请使用 formatDate
+ */
 function translateTimeStamp(time) {
   time = new Date(time * 1000);
   const y = time.getFullYear();
