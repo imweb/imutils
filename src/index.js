@@ -159,7 +159,9 @@ import { msgTools } from './util_17_chat';
   }
 }());
 
-module.exports = {
+const SUBJECTS2 = SUBJECTS;
+
+const api = {
   storage,
 
   getCookie,
@@ -233,7 +235,7 @@ module.exports = {
   grade,
   GRADES,
   SUBJECTS,
-  SUBJECTS2: SUBJECTS, // 为什么要重复 export ???
+  SUBJECTS2,
   getSavedSubject,
   getSubjectName,
   getSubjectShortName,
@@ -274,3 +276,6 @@ module.exports = {
 
   msgTools,
 };
+
+module.exports = api;
+module.exports.default = api;
