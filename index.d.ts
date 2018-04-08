@@ -197,7 +197,7 @@ export interface ImutilsStatic {
    * @returns {boolean}
    * @memberof ImutilsStatic
    */
-  getAppVersion(): boolean;
+  getAppVersion(): string;
 
   /**
    * 获取当前环境如：IOS、Android、H5
