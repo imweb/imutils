@@ -102,6 +102,19 @@ function isWX() {
 }
 
 /**
+ * 目前只有在微信，safari，uc，手Q中可以调起微信登录，否则只能调起QQ登录
+ * @memberof module:tencent/imutils
+ * @return {bool}
+ */
+function isSupportWXLogin() {
+  return / micromessenger\//i.test(UA)
+      || (/(iphone)+[\S|\s]*(version\/)[\S|\s]*safari\//i.test(UA))
+  // || / mqqbrowser\//i.test(UA) 手Q可以调起微信，但微信授权完毕后跳不回手Q了，所以先屏蔽手Q调起微信登录的功能
+      || (/(iphone)+[\S|\s]*uc/i.test(UA))
+      || (/(android)+[\S|\s]*uc/i.test(UA));
+}
+
+/**
  * 是否是MQQ
  * @memberof module:tencent/imutils
  * @return {bool} 是否是MQQ
@@ -272,8 +285,8 @@ function getEncodedURL(h, g, k, fuin) {
  */
 function getTencentURL(type, obj) {
   let h,
-    g,
-    k;
+      g,
+      k;
   let t;
   switch (type) {
     case 'all': // 'all'+gc: 打开群  限制:公开群不在群内, 无法直接打开aio, 而是会弹加群窗口
@@ -394,6 +407,7 @@ export {
   isPC,
   isWX,
   isQQ,
+  isSupportWXLogin,
   isMQQ,
   isFudaoApp,
   versionCodeZero,
