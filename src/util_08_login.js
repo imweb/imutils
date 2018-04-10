@@ -1,7 +1,7 @@
 // TODO lint fix
 
 import { delCookie } from './util_03_cookie';
-import { isFudaoApp } from './util_04_ua';
+import { isFudaoApp, isSupportWXLogin } from './util_04_ua';
 import { loadScript } from './util_10_lang';
 import { openAppPage } from './util_15_app';
 
@@ -16,19 +16,30 @@ function qqLogin(succUrl = location) {
 }
 
 /**
- * 还未实现
  * @memberof module:tencent/imutils
  */
-function wxLogin() {
-
+function wxLogin(succUrl = location) {
+  location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx90cb6dfbfe2d68df&redirect_uri=' +
+                  encodeURIComponent(window.location.protocol +
+                                     '//fudao.qq.com/cgi-bin/uidaccount/k12/login?ttype=4&account_type=2' +
+                                     '&buz_id=122051800&appid=wx90cb6dfbfe2d68df&redirect_uri=' +
+                                     encodeURIComponent(succUrl)) +
+                  '&response_type=code&scope=snsapi_userinfo#wechat_redirect';
 }
 
 /**
- * 还未实现
  * @memberof module:tencent/imutils
  */
-function login() {
-
+function login(succUrl = location) {
+  const supportWXLogin = isSupportWXLogin();
+  const loginPage = `https://fudao.qq.com/login.html?back_url=${encodeURIComponent(succUrl)}`;
+  if (!supportWXLogin) {
+    qqLogin(succUrl);
+  } else if (isFudaoApp()) {
+    openAppPage('login');
+  } else {
+    window.open(loginPage, '_self');
+  }
 }
 
 /**
