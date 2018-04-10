@@ -63,11 +63,11 @@ function reLogin() {
   });
 }
 
-function toLogin() {
+function toLogin(succUrl = location) {
   if (isFudaoApp()) {
     openAppPage('login');
   } else {
-    qqLogin(location.href);
+    qqLogin(succUrl);
   }
 }
 
