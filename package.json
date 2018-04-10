@@ -1,6 +1,6 @@
 {
   "name": "@tencent/imutils",
-  "version": "0.1.31",
+  "version": "0.1.20",
   "description": "企鹅辅导工具库",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
     "lint:fix": "eslint --fix *.js h5 client lib src",
     "precommit": "npm run lint",
     "test": "jest --coverage",
-    "doc": "node jsdoc.js",
-    "publish": "bable src --out-dir dist & npm version patch & npm run publish"
+    "doc": "node jsdoc.js"
   },
   "repository": {
     "type": "git",
