@@ -33,13 +33,18 @@ function setCookie(opt) {
   if (isServer) {
     return '';
   }
-  // 此 cookie 将被保存 30 天
-  const Days = 30;
-  const exp = new Date();
-  exp.setTime(exp.getTime() + (Days * 24 * 60 * 60 * 1000));
-  document.cookie = `${opt.name}=${encodeURIComponent(opt.value)};` +
-                    `expires=${opt.time || exp.toGMTString()};` +
-                    `domain=${opt.domain || 'qq.com'};path=/`;
+  const Days = 30; // 此 cookie 将被保存 30 天
+  const exp = new Date(); // new Date("December 31, 9998");
+  exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+  document.cookie =
+    opt.name +
+    '=' +
+    encodeURIComponent(opt.value) +
+    ';expires=' +
+      (opt.time || exp.toGMTString()) +
+    ';domain=' +
+      (opt.domain || 'qq.com') +
+    ';path=/';
 }
 
 /**
