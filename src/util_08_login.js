@@ -57,6 +57,12 @@ function reLogin() {
         delCookie('uin', hostDomain);
         delCookie('skey', hostDomain);
         delCookie('lskey', hostDomain);
+
+        // delete weixin related cookie
+        delCookie('uid_a2', hostDomain);
+        delCookie('uid_type', hostDomain);
+        delCookie('uid_uin', hostDomain);
+
         login(location.href);
       });
     }
