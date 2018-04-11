@@ -1,9 +1,11 @@
-import { isServer } from './util_00_env';
 import { getCookie } from './util_03_cookie';
 import {
   isWeixin,
   getQQUin,
 } from './util_04_ua';
+
+const isClient = typeof window === 'object' && typeof document !== 'undefined';
+const isServer = !isClient;
 
 // 兼容微信和QQ
 function getUin() {
