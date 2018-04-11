@@ -37,7 +37,9 @@ function setCookie(opt) {
   const Days = 30;
   const exp = new Date();
   exp.setTime(exp.getTime() + (Days * 24 * 60 * 60 * 1000));
-  document.cookie = `${opt.name}=${encodeURIComponent(opt.value)};expires=${opt.time}` || `${exp.toGMTString()};domain=${opt.domain}` || 'qq.com' + ';path=/';
+  document.cookie = `${opt.name}=${encodeURIComponent(opt.value)};` +
+                    `expires=${opt.time || exp.toGMTString()};` +
+                    `domain=${opt.domain || 'qq.com'};path=/`;
 }
 
 /**
