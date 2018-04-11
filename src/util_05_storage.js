@@ -47,6 +47,24 @@ export const storage = {
   },
 
   /**
+   * 删除
+   * @param {any} key
+   * @returns {any}
+   */
+  remove(key) {
+    if (isServer) {
+      return;
+    }
+    if (window.localStorage) {
+      try {
+        window.localStorage.removeItem(getKey(key));
+      } catch (e) {
+        // error
+      }
+    }
+  },
+
+  /**
    * 设置全局变量
    * @param {any} key
    * @param {any} value
