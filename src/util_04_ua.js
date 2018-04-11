@@ -109,7 +109,7 @@ function isWX() {
 function isSupportWXLogin() {
   return / micromessenger\//i.test(UA)
       || (/(iphone)+[\S|\s]*(version\/)[\S|\s]*safari\//i.test(UA))
-  // || / mqqbrowser\//i.test(UA) 手Q可以调起微信，但微信授权完毕后跳不回手Q了，所以先屏蔽手Q调起微信登录的功能
+      || / mqqbrowser\//i.test(UA) // 手Q可以调起微信，但微信授权完毕后跳不回手Q了，所以先屏蔽手Q调起微信登录的功能
       || (/(iphone)+[\S|\s]*uc/i.test(UA))
       || (/(android)+[\S|\s]*uc/i.test(UA));
 }
