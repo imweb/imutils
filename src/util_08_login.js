@@ -57,7 +57,7 @@ function reLogin() {
         delCookie('uin', hostDomain);
         delCookie('skey', hostDomain);
         delCookie('lskey', hostDomain);
-        qqLogin(location.href);
+        login(location.href);
       });
     }
   });
