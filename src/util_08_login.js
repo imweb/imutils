@@ -1,6 +1,6 @@
 // TODO lint fix
 
-import { delCookie } from './util_03_cookie';
+import { delCookie, setCookie } from './util_03_cookie';
 import { isFudaoApp, isSupportWXLogin } from './util_04_ua';
 import { loadScript } from './util_10_lang';
 import { openAppPage } from './util_15_app';
@@ -46,7 +46,7 @@ function login(succUrl = location) {
  * 重新登录
  * @memberof module:tencent/imutils
  */
-function reLogin() {
+function reLogin(jumpUrl = location) {
   const hostDomain = (location.hostname.match(/(\.\w+){2}$/) || [`.${location.hostname}`])[0];
   const isLoaded = function () {
     return typeof window.pt_logout !== 'undefined';
@@ -59,11 +59,14 @@ function reLogin() {
         delCookie('lskey', hostDomain);
 
         // delete weixin related cookie
-        delCookie('uid_a2', hostDomain);
-        delCookie('uid_type', hostDomain);
-        delCookie('uid_uin', hostDomain);
-
-        login(location.href);
+        ['uid_a2', 'uid_type', 'uid_uin'].forEach((name) => {
+          setCookie({
+            name,
+            value: '',
+            domain: '.fudao.qq.com',
+          });
+        });
+        login(location);
       });
     }
   });
