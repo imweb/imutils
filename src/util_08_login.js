@@ -60,7 +60,7 @@ function reLogin(jumpUrl = location) {
 
         // delete weixin related cookie
         ['uid_a2', 'uid_type', 'uid_uin'].forEach((name) => {
-          setCookie({
+          delCookie({
             name,
             value: '',
             domain: '.fudao.qq.com',
