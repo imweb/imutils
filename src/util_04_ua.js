@@ -130,6 +130,9 @@ const REGEXP_FUDAO_APP = /EducationApp/;
  * @return {bool} 是否是辅导APP
  */
 function isFudaoApp() {
+  if (!isClient) {
+    return false;
+  }
   return REGEXP_FUDAO_APP.test(navigator.userAgent);
 }
 
