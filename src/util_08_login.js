@@ -16,6 +16,7 @@ function qqLogin(succUrl = location) {
 }
 
 /**
+ * 微信登录
  * @memberof module:tencent/imutils
  */
 function wxLogin(succUrl = location) {
@@ -28,6 +29,7 @@ function wxLogin(succUrl = location) {
 }
 
 /**
+ * 跳转到登录页
  * @memberof module:tencent/imutils
  */
 function login(succUrl = location) {
@@ -42,11 +44,12 @@ function login(succUrl = location) {
   }
 }
 
+
 /**
- * 重新登录
+ * 退出登录
  * @memberof module:tencent/imutils
  */
-function reLogin(jumpUrl = location) {
+function logout(callback) {
   const hostDomain = (location.hostname.match(/(\.\w+){2}$/) || [`.${location.hostname}`])[0];
   const isLoaded = function () {
     return typeof window.pt_logout !== 'undefined';
@@ -66,9 +69,22 @@ function reLogin(jumpUrl = location) {
             domain: '.fudao.qq.com',
           });
         });
-        login(location);
+
+        if (callback) {
+          callback();
+        }
       });
     }
+  });
+}
+
+/**
+ * 重新登录
+ * @memberof module:tencent/imutils
+ */
+function reLogin(jumpUrl = location) {
+  logout(() => {
+    login(location);
   });
 }
 
@@ -84,6 +100,7 @@ export {
   qqLogin,
   wxLogin,
   login,
+  logout,
   reLogin,
   toLogin,
 };
