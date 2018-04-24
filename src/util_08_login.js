@@ -62,11 +62,18 @@ function logout(callback) {
         delCookie('lskey', hostDomain);
 
         // delete weixin related cookie
-        ['uid_a2', 'uid_type', 'uid_uin'].forEach((name) => {
+        ['uid_a2', 'uid_type', 'uid_uin', 'uid_appid', 'openid'].forEach((name) => {
           delCookie({
             name,
             value: '',
             domain: '.fudao.qq.com',
+          });
+        });
+        ['uid_a2', 'uid_type', 'uid_uin', 'uid_appid', 'openid'].forEach((name) => {
+          delCookie({
+            name,
+            value: '',
+            domain: '.qq.com', 
           });
         });
 
