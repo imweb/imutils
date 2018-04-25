@@ -22,7 +22,7 @@ function qqLogin(succUrl = location) {
 function wxLogin(succUrl = location) {
   location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx90cb6dfbfe2d68df&redirect_uri=' +
                   encodeURIComponent(window.location.protocol +
-                                     '//fudao.qq.com/cgi-bin/uidaccount/k12/login?ttype=4&account_type=2' +
+                                     '//fudao.qq.com/cgi-bin/uidaccount/k12/login?normal_login=1&ttype=4&account_type=2' +
                                      '&buz_id=122051800&appid=wx90cb6dfbfe2d68df&redirect_uri=' +
                                      encodeURIComponent(succUrl)) +
                   '&response_type=code&scope=snsapi_userinfo#wechat_redirect';
@@ -33,8 +33,16 @@ function wxLogin(succUrl = location) {
  * @memberof module:tencent/imutils
  */
 function login(succUrl = location) {
+  const isTestLogin = /(\?|&)testlogin=1/.test(window.location.href);
   const supportWXLogin = isSupportWXLogin();
   const loginPage = `https://fudao.qq.com/login.html?back_url=${encodeURIComponent(succUrl)}`;
+
+  // 灰度测试
+  if (!isTestLogin) {
+    qqLogin(succUrl);
+    return;
+  }
+
   if (!supportWXLogin) {
     qqLogin(succUrl);
   } else if (isFudaoApp()) {
