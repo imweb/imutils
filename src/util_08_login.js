@@ -39,7 +39,11 @@ function login(succUrl = location) {
 
   // 灰度测试
   if (!isTestLogin) {
-    qqLogin(succUrl);
+    if (isFudaoApp()) {
+      openAppPage('login');
+    } else {
+      qqLogin(succUrl);
+    }
     return;
   }
 

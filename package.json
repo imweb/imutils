@@ -1,6 +1,6 @@
 {
   "name": "@tencent/imutils",
-  "version": "0.1.45",
+  "version": "0.1.46",
   "description": "企鹅辅导工具库",
   "main": "index.js",
   "scripts": {
