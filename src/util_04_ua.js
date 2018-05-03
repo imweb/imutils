@@ -402,7 +402,7 @@ function isIphoneX() {
 /**
  * 微信小程序环境
  */
-const isWeixinMinProgram = window.__wxjs_environment === 'miniprogram';
+const isWeixinMinProgram = typeof window !== 'undefined' && window.__wxjs_environment === 'miniprogram';
 
 export {
   getUin,
