@@ -399,6 +399,10 @@ function getTeacherClient() {
 function isIphoneX() {
   return window.screen.width === 375 && window.screen.height === 812;
 }
+/**
+ * 微信小程序环境
+ */
+const isWeixinMinProgram = window.__wxjs_environment === 'miniprogram';
 
 export {
   getUin,
@@ -410,6 +414,7 @@ export {
   isPC,
   isWX,
   isQQ,
+  isWeixinMinProgram,
   isSupportWXLogin,
   isMQQ,
   isFudaoApp,

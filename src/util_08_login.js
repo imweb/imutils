@@ -1,7 +1,7 @@
 // TODO lint fix
 
-import { delCookie, setCookie } from './util_03_cookie';
-import { isFudaoApp, isSupportWXLogin } from './util_04_ua';
+import { delCookie } from './util_03_cookie';
+import { isFudaoApp, isSupportWXLogin, isWeixinMinProgram } from './util_04_ua';
 import { loadScript } from './util_10_lang';
 import { openAppPage } from './util_15_app';
 
@@ -36,6 +36,12 @@ function login(succUrl = location) {
   const isTestLogin = /(\?|&)testlogin=1/.test(window.location.href);
   const supportWXLogin = isSupportWXLogin();
   const loginPage = `https://fudao.qq.com/login.html?back_url=${encodeURIComponent(succUrl)}`;
+
+  // 微信小程序
+  if (isWeixinMinProgram) {
+    wxLogin();
+    return;
+  }
 
   // 灰度测试
   if (!isTestLogin) {
@@ -85,7 +91,7 @@ function logout(callback) {
           delCookie({
             name,
             value: '',
-            domain: '.qq.com', 
+            domain: '.qq.com',
           });
         });
 
