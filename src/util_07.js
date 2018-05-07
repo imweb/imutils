@@ -67,7 +67,9 @@ function showTips(text) {
       const op = Math.round(+div.style.opacity * 10) / 10;
       if (op === 0) {
         clearInterval(pointer);
-        document.body.removeChild(div);
+        if (div && document.body.contains(div)) {
+          document.body.removeChild(div);
+        }
       } else {
         div.style.opacity = String(op - 0.1);
       }
@@ -81,7 +83,9 @@ function showTips(text) {
  */
 function hideTips() {
   [...document.querySelectorAll('.util_tips')].forEach((tipsDom) => {
-    document.body.removeChild(tipsDom);
+    if (tipsDom && document.body.contains(tipsDom)) {
+      document.body.removeChild(tipsDom);
+    }
   });
 }
 
