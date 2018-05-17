@@ -18,6 +18,8 @@ function getBitMapValue(v, map) {
   }
 
   for (let i = map.length - 1; i > -1; --i) {
+    // 相关讨论见这里 https://github.com/airbnb/javascript/issues/1392
+    // eslint-disable-next-line
     val = Math.pow(2, i);
     if (v >= val) {
       ret.unshift(map[i]);
@@ -46,14 +48,16 @@ function showTips(text) {
 
   div.appendChild(span);
   document.body.appendChild(div);
+  // eslint-disable-next-line
   appear();
 
   function appear() {
-    var pointer = setInterval(() => {
+    const pointer = setInterval(() => {
       const op = Math.round(+div.style.opacity * 10) / 10;
       if (op === 1) {
         clearInterval(pointer);
         setTimeout(() => {
+          // eslint-disable-next-line
           disappear();
         }, 2000);
       } else {
@@ -63,7 +67,7 @@ function showTips(text) {
   }
 
   function disappear() {
-    var pointer = setInterval(() => {
+    const pointer = setInterval(() => {
       const op = Math.round(+div.style.opacity * 10) / 10;
       if (op === 0) {
         clearInterval(pointer);
@@ -152,8 +156,8 @@ function getImgUrl(url = '') {
  */
 function getCourseUrl(cid) {
   let protocol = 'https:';
-  if (typeof location !== 'undefined') {
-    protocol = location.protocol;
+  if (typeof window.location !== 'undefined') {
+    protocol = window.location.protocol;
   }
   return `${protocol}//fudao.qq.com/course.html?_bid=2379&course_id=${cid}`;
 }
@@ -166,8 +170,8 @@ function getCourseUrl(cid) {
  */
 function getTeacherUrl(tid) {
   let protocol = 'https:';
-  if (typeof location !== 'undefined') {
-    protocol = location.protocol;
+  if (typeof window.location !== 'undefined') {
+    protocol = window.location.protocol;
   }
   return `${protocol}//fudao.qq.com/teacher.html?_bid=2379&tid=${tid}`;
 }
@@ -195,7 +199,7 @@ const photoProgress = {
   hasAddEventListener: false,
   onPhotoProgressCbs: {},
   on(name, fn) {
-    const onPhotoProgressCbs = this.onPhotoProgressCbs;
+    const { onPhotoProgressCbs } = this;
 
     if (!onPhotoProgressCbs[name]) {
       onPhotoProgressCbs[name] = fn;
@@ -203,7 +207,6 @@ const photoProgress = {
       if (typeof onPhotoProgressCbs[name] === 'function') {
         onPhotoProgressCbs[name] = [onPhotoProgressCbs[name]];
       }
-
       onPhotoProgressCbs[name].push(fn);
     }
 
@@ -214,8 +217,8 @@ const photoProgress = {
           if (typeof onPhotoProgressCbs[fnName] === 'function') {
             onPhotoProgressCbs[fnName](data);
           } else {
-            onPhotoProgressCbs[fnName].forEach((fn) => {
-              fn(data);
+            onPhotoProgressCbs[fnName].forEach((f) => {
+              f(data);
             });
           }
         });
