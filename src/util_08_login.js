@@ -40,20 +40,7 @@ function login(succUrl = location) {
   // 微信小程序
   if (isWeixinMinProgram) {
     wxLogin();
-    return;
-  }
-
-  // 灰度测试
-  if (!isTestLogin) {
-    if (isFudaoApp()) {
-      openAppPage('login');
-    } else {
-      qqLogin(succUrl);
-    }
-    return;
-  }
-
-  if (!supportWXLogin) {
+  } else if (!supportWXLogin) {
     qqLogin(succUrl);
   } else if (isFudaoApp()) {
     openAppPage('login');
