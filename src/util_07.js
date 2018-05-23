@@ -290,46 +290,43 @@ let lastNetworkType;
  */
 function getNetworkType(cb) {
   if (lastNetworkType === undefined) {
-      //如果是微信的话
-      if (isWX()) {
-          weiXinApply(function() {
-              window.WeixinJSBridge.invoke("getNetworkType", {}, function(res) {
-                  lastNetworkType = 'unknown';
-
-                  switch (res.err_msg) {
-                      case 'network_type:edge':
-                          lastNetworkType = '2g';
-                          break;
-                      case 'network_type:wwan':
-                          lastNetworkType = '3g';
-                          break;
-                      case 'network_type:wifi':
-                          lastNetworkType = 'wifi';
-                          break;
-                          // case: 'fail': lastNetworkType = -1;
-                  }
-                  cb(lastNetworkType);
-              });
-          });
-      } else if (isFudaoApp() &&  window.mqq) {
-        
-        window.mqq.invoke('edu', 'getNetworkType', function (res) {
-          let resArr = ['', 'wifi', '2G', '3G', '4G', 'cable'];
-          lastNetworkType = resArr[res] || 'unknown';
+    // 如果是微信的话
+    if (isWX()) {
+      weiXinApply(() => {
+        window.WeixinJSBridge.invoke('getNetworkType', {}, (res) => {
+          lastNetworkType = 'unknown';
+          switch (res.err_msg) {
+            case 'network_type:edge':
+              lastNetworkType = '2g';
+              break;
+            case 'network_type:wwan':
+              lastNetworkType = '3g';
+              break;
+            case 'network_type:wifi':
+              lastNetworkType = 'wifi';
+              break;
+              // case: 'fail': lastNetworkType = -1;
+            default:
+              break;
+          }
           cb(lastNetworkType);
         });
-
-      } else {
-
-        lastNetworkType = 'unknown';
+      });
+    } else if (isFudaoApp() && window.mqq) {
+      window.mqq.invoke('edu', 'getNetworkType', (res) => {
+        const resArr = ['', 'wifi', '2G', '3G', '4G', 'cable'];
+        lastNetworkType = resArr[res] || 'unknown';
         cb(lastNetworkType);
-        
-      }
-
-  } else {
+      });
+    } else {
+      lastNetworkType = 'unknown';
       cb(lastNetworkType);
+    }
+  } else {
+    cb(lastNetworkType);
   }
-};
+}
+
 export {
   getBitMapValue,
   showTips,
