@@ -1,5 +1,6 @@
 import { setCookie } from './util_03_cookie';
-import { isWX, isMQQ } from './util_04_ua';
+import { isWX, isMQQ, isFudaoApp } from './util_04_ua';
+import { weiXinApply } from './util_11_wx';
 
 
 /**
@@ -278,6 +279,57 @@ function setShareInfomation(title, desc, link, imgUrl) {
   }
 }
 
+
+let lastNetworkType;
+
+/**
+ * 微信和APP里获取网络类型
+ * @memberof module:tencent/imutils
+ * @param {string} callback异步回调函数
+ * @return {string} 网络类型：'unknown', 'wifi', '2G', '3G', '4G'
+ */
+function getNetworkType(cb) {
+  if (lastNetworkType === undefined) {
+      //如果是微信的话
+      if (isWX()) {
+          weiXinApply(function() {
+              window.WeixinJSBridge.invoke("getNetworkType", {}, function(res) {
+                  lastNetworkType = 'unknown';
+
+                  switch (res.err_msg) {
+                      case 'network_type:edge':
+                          lastNetworkType = '2g';
+                          break;
+                      case 'network_type:wwan':
+                          lastNetworkType = '3g';
+                          break;
+                      case 'network_type:wifi':
+                          lastNetworkType = 'wifi';
+                          break;
+                          // case: 'fail': lastNetworkType = -1;
+                  }
+                  cb(lastNetworkType);
+              });
+          });
+      } else if (isFudaoApp() &&  window.mqq) {
+        
+        window.mqq.invoke('edu', 'getNetworkType', function (res) {
+          let resArr = ['', 'wifi', '2G', '3G', '4G', 'cable'];
+          lastNetworkType = resArr[res] || 'unknown';
+          cb(lastNetworkType);
+        });
+
+      } else {
+
+        lastNetworkType = 'unknown';
+        cb(lastNetworkType);
+        
+      }
+
+  } else {
+      cb(lastNetworkType);
+  }
+};
 export {
   getBitMapValue,
   showTips,
@@ -291,4 +343,5 @@ export {
   clickLock,
   photoProgress,
   setShareInfomation,
+  getNetworkType,
 };
