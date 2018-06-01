@@ -25,6 +25,13 @@ const isQQ = UA.indexOf('mqqbrowser') !== -1;
 const isQQLogin = parseInt(getCookie('uid_type'), 10) === 0;
 
 /**
+ * 是否weixin登陆
+ * @constant
+ * @memberof module:tencent/imutils
+ */
+const isWXLogin = parseInt(getCookie('uid_type'), 10) === 2;
+
+/**
  * 获取qq uin
  * @memberof module:tencent/imutils
  * @return {string} 返回QQ的uin
@@ -414,6 +421,8 @@ export {
   isPC,
   isWX,
   isQQ,
+  isQQLogin,
+  isWXLogin,
   isWeixinMinProgram,
   isSupportWXLogin,
   isMQQ,
