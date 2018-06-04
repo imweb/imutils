@@ -298,6 +298,67 @@ function getTutorial(num) {
 
 const SUBJECTS2 = SUBJECTS;
 
+/**
+ * 获取年级名称标签
+ *
+ * @param {string} 数字组成的年级，也支持一个数字。例如：'6001,6002'、6001等
+ * @param {bool} isGradeMerge 年级内是否合并，如果是true，
+ * 高中/初中年级内有两个以上年级，返回“高中”/“初中”，小学三个以上年级，返回“小学”
+ * @param {bool} isAllMerge 如果为true，全部都会合并。
+ * @returns {string} 年级标签。例如："高中"、"高一,高二"等
+ *
+ * getGradeNameStr('7001,7002,6001,6002',false,false) => '初一,初二,一年级,二年级'
+ * getGradeNameStr('7001,7002,6001,6002',true,false) => '初中,一年级,二年级'
+ * getGradeNameStr('7001,7002,6001,6002',true,true) => '全年级'
+ * getGradeNameStr2('7001,7002',true,true) => '小学'
+ */
+const getGradeNameStr = function(gradeStr = '', isGradeMerge, isAllMerge) {
+  let gradesStr = gradeStr;
+  if (typeof gradesStr !== 'string') {
+    gradesStr = String(gradeStr);
+  }
+
+  let highGrades = gradesStr.match(/500[123]/g);
+  let middleGrades = gradesStr.match(/600[123]/g);
+  let primaryGrades = gradesStr.match(/700[1-5]/g);
+
+  let gradeNames = [];
+
+  // 有高中的年级，则返回对应的年级，例如: “高一”、“高一,高二”。
+  // 如果要进行合并，有两个以上高中年级，返回“高中”。
+  if (highGrades && highGrades.length >= 2 && (isGradeMerge || isAllMerge)) {
+    gradeNames.push('高中');
+  } else if (highGrades && highGrades.length) {
+    highGrades.sort((a,b) => a-b).forEach((grade) => {
+      gradeNames.push(GRADES[grade]);
+    })
+  }
+
+  if (middleGrades && middleGrades.length >= 2 && (isGradeMerge || isAllMerge)) {
+    gradeNames.push('初中');
+  } else if (middleGrades && middleGrades.length) {
+    middleGrades.sort((a,b) => a-b).forEach((grade) => {
+      gradeNames.push(GRADES[grade]);
+    })
+  }
+
+  // 如果要进行合并，有三个以上小学年级，返回“小学”
+  if (primaryGrades && primaryGrades.length >= 3 && (isGradeMerge || isAllMerge)) {
+    gradeNames.push('小学');
+  } else if (primaryGrades && primaryGrades.length) {
+    primaryGrades.sort((a,b) => a-b).forEach((grade) => {
+      gradeNames.push(GRADES[grade]);
+    })
+  }
+
+  if (isAllMerge && !highGrades && !middleGrades && gradeNames.length > 1) {
+    return '小学';
+  }else if (isAllMerge && gradeNames.length > 1) {
+    return '全年级';
+  }
+  return gradeNames.toString();
+}
+
 export {
   CourseType,
   SUBJECTS,
@@ -309,6 +370,7 @@ export {
   getSubjectName,
   getSubjectShortName,
   getGradeName,
+  getGradeNameStr,
   COURSE_TYPE,
   getTutorial,
 };
