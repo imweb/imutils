@@ -219,9 +219,9 @@ function getSubjectShortName(num) {
 }
 
 // 学科标识
-const SING_HIGH = '500';     // 高中
-const SING_JUNIOR = '600';   // 初中
-const SING_PRIMARY = '700';  // 小学
+const SING_HIGH = '500'; // 高中
+const SING_JUNIOR = '600'; // 初中
+const SING_PRIMARY = '700'; // 小学
 /**
  * @memberof module:tencent/imutils
  */
@@ -233,7 +233,7 @@ function getGradeName(str) {
   if (arr.length === 1) {
     return Number(arr[0]) > 1000 ? GRADES[arr[0]] :
            (deprecatedGrade[arr[0]] != undefined ? deprecatedGrade[arr[0]] : '小学');
-  } else {
+  } 
     const isHighSchool = str.indexOf(SING_HIGH) > -1 ? 1 : 0;
     const isMiddSchool = str.indexOf(SING_JUNIOR) > -1 ? 1 : 0;
     const isPrimarySchool = str.indexOf(SING_PRIMARY) > -1 ? 1 : 0;
@@ -273,7 +273,7 @@ function getGradeName(str) {
     else {
       return ['高中', '初中'][mergeResult - 1];
     }
-  }
+  
 }
 
 
@@ -312,52 +312,52 @@ const SUBJECTS2 = SUBJECTS;
  * getGradeNameStr('7001,7002,6001,6002',true,true) => '全年级'
  * getGradeNameStr2('7001,7002',true,true) => '小学'
  */
-const getGradeNameStr = function(gradeStr = '', isGradeMerge, isAllMerge) {
+const getGradeNameStr = function (gradeStr = '', isGradeMerge, isAllMerge) {
   let gradesStr = gradeStr;
   if (typeof gradesStr !== 'string') {
     gradesStr = String(gradeStr);
   }
 
-  let highGrades = gradesStr.match(/500[123]/g);
-  let middleGrades = gradesStr.match(/600[123]/g);
-  let primaryGrades = gradesStr.match(/700[1-5]/g);
+  const highGrades = gradesStr.match(/500[123]/g);
+  const middleGrades = gradesStr.match(/600[123]/g);
+  const primaryGrades = gradesStr.match(/700[1-5]/g);
 
-  let gradeNames = [];
+  const gradeNames = [];
 
   // 有高中的年级，则返回对应的年级，例如: “高一”、“高一,高二”。
   // 如果要进行合并，有两个以上高中年级，返回“高中”。
   if (highGrades && highGrades.length >= 2 && (isGradeMerge || isAllMerge)) {
     gradeNames.push('高中');
   } else if (highGrades && highGrades.length) {
-    highGrades.sort((a,b) => a-b).forEach((grade) => {
-      gradeNames.push(GRADES[grade]);
-    })
+    highGrades.sort((a, b) => a - b).forEach((gradeItem) => {
+      gradeNames.push(GRADES[gradeItem]);
+    });
   }
 
   if (middleGrades && middleGrades.length >= 2 && (isGradeMerge || isAllMerge)) {
     gradeNames.push('初中');
   } else if (middleGrades && middleGrades.length) {
-    middleGrades.sort((a,b) => a-b).forEach((grade) => {
-      gradeNames.push(GRADES[grade]);
-    })
+    middleGrades.sort((a, b) => a - b).forEach((gradeItem) => {
+      gradeNames.push(GRADES[gradeItem]);
+    });
   }
 
   // 如果要进行合并，有三个以上小学年级，返回“小学”
   if (primaryGrades && primaryGrades.length >= 3 && (isGradeMerge || isAllMerge)) {
     gradeNames.push('小学');
   } else if (primaryGrades && primaryGrades.length) {
-    primaryGrades.sort((a,b) => a-b).forEach((grade) => {
-      gradeNames.push(GRADES[grade]);
-    })
+    primaryGrades.sort((a, b) => a - b).forEach((gradeItem) => {
+      gradeNames.push(GRADES[gradeItem]);
+    });
   }
 
   if (isAllMerge && !highGrades && !middleGrades && gradeNames.length > 1) {
     return '小学';
-  }else if (isAllMerge && gradeNames.length > 1) {
+  } else if (isAllMerge && gradeNames.length > 1) {
     return '全年级';
   }
   return gradeNames.toString();
-}
+};
 
 export {
   CourseType,
