@@ -183,6 +183,7 @@ mapReverse(SUBJECTS);
  * @return {object}  会返回这样的格式{subject,subjectIndex}
  */
 function getSavedSubject() {
+  // eslint-disable-next-line
   const subject = storage.get('pl_subject_text') || '';
   const subjectIndex = storage.get('pl_subject_index') || 0;
 
@@ -223,59 +224,57 @@ const SING_HIGH = '500'; // 高中
 const SING_JUNIOR = '600'; // 初中
 const SING_PRIMARY = '700'; // 小学
 /**
+ * 获取年级名
+ * @param {string} str
+ * @return {string}
  * @memberof module:tencent/imutils
  */
 function getGradeName(str) {
   if (!str) {
     return '';
-  }  
+  }
   const arr = String(str).split(','); // 保存数组
   if (arr.length === 1) {
-    return Number(arr[0]) > 1000 ? GRADES[arr[0]] :
-           (deprecatedGrade[arr[0]] != undefined ? deprecatedGrade[arr[0]] : '小学');
-  } 
-    const isHighSchool = str.indexOf(SING_HIGH) > -1 ? 1 : 0;
-    const isMiddSchool = str.indexOf(SING_JUNIOR) > -1 ? 1 : 0;
-    const isPrimarySchool = str.indexOf(SING_PRIMARY) > -1 ? 1 : 0;
-    // 5XXX， 6XXX， 7XXX , 跨年级，就是 全年级
-    const mergeResult = isHighSchool + isMiddSchool + isPrimarySchool;
-    if (mergeResult >= 2) {  // 存在 2个年级，就是全年级, 或者 大于等于 3个年级
-      return '全年级';
-    } else if (arr.length === 2) {
-      let ret = [];
-      let sigalCount = 0; // 大于 14000 ，证明就是 有 小学 年级
+    // eslint-disable-next-line
+    return Number(arr[0]) > 1000 ? GRADES[arr[0]] : (deprecatedGrade[arr[0]] !== undefined ? deprecatedGrade[arr[0]] : '小学');
+  }
+  const isHighSchool = str.indexOf(SING_HIGH) > -1 ? 1 : 0;
+  const isMiddSchool = str.indexOf(SING_JUNIOR) > -1 ? 1 : 0;
+  const isPrimarySchool = str.indexOf(SING_PRIMARY) > -1 ? 1 : 0;
+  // 5XXX， 6XXX， 7XXX , 跨年级，就是 全年级
+  const mergeResult = isHighSchool + isMiddSchool + isPrimarySchool;
+  if (mergeResult >= 2) { // 存在 2个年级，就是全年级, 或者 大于等于 3个年级
+    return '全年级';
+  } else if (arr.length === 2) {
+    let ret = [];
+    let sigalCount = 0; // 大于 14000 ，证明就是 有 小学 年级
+    arr.forEach((key) => {
+      ret.push(GRADES[key]);
+      sigalCount += Number(key);
+    });
+
+    if (sigalCount > 14000) { // 大于 14000 就是2个小学年级，小学从 7000 开始
+      ret = [];
       arr.forEach((key) => {
-        ret.push(GRADES[key]);
-        sigalCount += Number(key);
+        ret.push(PRIMARY_GREADE_MAP[key]);
       });
-
-      if (sigalCount > 14000) { // 大于 14000 就是2个小学年级，小学从 7000 开始
-        ret = [];
-        arr.forEach((key) => {
-          ret.push(PRIMARY_GREADE_MAP[key]);
-        });
-        ret = `${ret.join('/')}年级`;
-      } else {
-        ret = ret.join('/');
-      }
-      return ret;
-    } else if (arr.length === 3) {  // 等于3的情况，这样，判断一个就可以，因为一定是一个年级的。
-      if (arr[0] > 5000 && arr[0] < 6000) { // 高中
-        return '高中';
-      } else if (arr[0] > 6000 && arr[0] < 7000) {
-        return '初中';
-      } else {
-        return '小学';
-      }
-    } else if (arr.length > 3) {  // 当大于3，并且还在一个年级的场景，只有小学存在，扩展使用
-      return '小学';
+      ret = `${ret.join('/')}年级`;
+    } else {
+      ret = ret.join('/');
     }
-    else {
-      return ['高中', '初中'][mergeResult - 1];
+    return ret;
+  } else if (arr.length === 3) { // 等于3的情况，这样，判断一个就可以，因为一定是一个年级的。
+    if (arr[0] > 5000 && arr[0] < 6000) { // 高中
+      return '高中';
+    } else if (arr[0] > 6000 && arr[0] < 7000) {
+      return '初中';
     }
-  
+    return '小学';
+  } else if (arr.length > 3) { // 当大于3，并且还在一个年级的场景，只有小学存在，扩展使用
+    return '小学';
+  }
+  return ['高中', '初中'][mergeResult - 1];
 }
-
 
 const tutorial = {
   1: '人教版',
