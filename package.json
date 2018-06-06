@@ -10,10 +10,12 @@
     "test": "jest",
     "doc": "node jsdoc.js"
   },
- "jest": {
-   "verbose": true,
-   "testMatch": ["**/tests/**/*.js?(x)"]
- },
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "**/tests/**/*.js?(x)"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "http://git.code.oa.com/imweb/imutils.git"
@@ -24,6 +26,7 @@
   ],
   "license": "ISC",
   "devDependencies": {
+    "@tencent/babel-preset-fdjs": "^0.1.0",
     "@tencent/fdjs-scripts": "^0.1.2",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.1",
