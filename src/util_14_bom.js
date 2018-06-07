@@ -8,7 +8,7 @@ import {
  * addPageShowListener
  * 部分手机，'webkitvisibilitychange' in document === false，但是是支持 document.addEventListener('webkitvisibilitychange') 的
  * ref: https://stackoverflow.com/a/2877424
- * @payton 测试了兼容性，请继续补充
+ * payton 测试了兼容性，请继续补充
  * |-----------+----------+------------------|
  * | 浏览器    | pageshow | visibilitychange |
  * |-----------+----------+------------------|
@@ -24,6 +24,7 @@ import {
  * |-----------+----------+------------------|
  * | 魅族 自带 | n        | n                |
  * |-----------+----------+------------------|
+ *
  * @memberof module:tencent/imutils
  * @param {function} listener 监听的函数
  * @return {null}
