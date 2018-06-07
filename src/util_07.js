@@ -1,8 +1,7 @@
 import { setCookie } from './util_03_cookie';
 import { isWX, isMQQ, isFudaoApp } from './util_04_ua';
 import { weiXinApply } from './util_11_wx';
-
-
+import { openAppPage, getAppVersion } from './util_15_app';
 /**
  * getBitMapValue
  * @memberof module:tencent/imutils
@@ -327,6 +326,43 @@ function getNetworkType(cb) {
   }
 }
 
+
+/**
+ * 各种环境下打开页面
+ * @memberof module:tencent/imutils
+ * @param {string} url需要打开的页面链接
+ * @param {object} obj可选参数，当前只支持属性target：'new' - 新开窗口（默认）, 'self' - 替换当前窗口
+ * @return 无
+*/
+const NEW = 'new', SELF = 'self';
+function openUrl(url, params = {}) {
+  const { mqq, location} = window;
+  const { target = NEW} = params;
+
+  if (isFudaoApp()) {
+    params = { url: encodeURIComponent(url)};
+    if (target === SELF) {
+      // ios 2.2不用调closepPage关闭当前页，调openAppPage的时候传removecnt: 1，会在进入下个页面的时候帮关闭当前页
+      if (mqq.android || (mqq.iOS && getAppVersion() < 17)) {
+        mqq.invoke('edu', 'closePage');
+      } else {
+        params.removecnt = 1;
+      }
+    }
+    openAppPage('webview', params);
+
+  } else if (+mqq.QQVersion !== 0) {
+    mqq.ui.openUrl({ url: url, target: target === NEW ? 1 : 0});
+  } else {
+
+    if (target === SELF) {
+      location.replace(url);
+    } else {
+      location.href = url;
+    }
+  }
+}
+
 export {
   getBitMapValue,
   showTips,
@@ -341,4 +377,5 @@ export {
   photoProgress,
   setShareInfomation,
   getNetworkType,
+  openUrl,
 };
