@@ -109,7 +109,14 @@ export interface ImutilsStatic {
    * @memberof ImutilsStatic
    */
   decodeHtml(string: string): string;
-
+  /**
+   * encode html代码
+   *
+   * @param {string} string
+   * @returns {string}
+   * @memberof ImutilsStatic
+   */
+  encodeHtml(string:string):string;
   /**
    * 通过name获取Cookie
    * @param {string} name
