@@ -5,7 +5,7 @@ const htmlDecodeDict = {
   '&lt;': '<',
   '&gt;': '>',
   '&nbsp;': ' ',
-  '&#39;': '\'',
+  '&#39;': "'",
 };
 
 const arr = Object.keys(htmlDecodeDict);
@@ -19,9 +19,26 @@ const decodeReg = new RegExp(`(${arr.join('|')})`, 'g');
  * @return {string}
  */
 function decodeHtml(s) {
-  return s ? s.replace(decodeReg, (all) => {
-    return htmlDecodeDict[all];
-  }) : s;
+  return s
+    ? s.replace(decodeReg, (all) => {
+        return htmlDecodeDict[all];
+      })
+    : s;
 }
+const htmlEncodeDict = {
+  '&': '&amp;',
+  '"': '&quot;',
+  "'": '&apos;',
+  '<': '&lt;',
+  '>': '&gt;',
+};
 
-export { decodeHtml };
+const encodeReg = new RegExp(`(${Object.keys(htmlEncodeDict).join('|')})`, 'g');
+function encodeHtml(text) {
+  return text
+    ? text.replace(encodeReg, (all) => {
+        return htmlEncodeDict[all];
+      })
+    : text;
+}
+export { decodeHtml, encodeHtml };
