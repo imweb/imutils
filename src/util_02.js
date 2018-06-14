@@ -25,6 +25,8 @@ function decodeHtml(s) {
       })
     : s;
 }
+
+
 const htmlEncodeDict = {
   '&': '&amp;',
   '"': '&quot;',
@@ -34,6 +36,12 @@ const htmlEncodeDict = {
 };
 
 const encodeReg = new RegExp(`(${Object.keys(htmlEncodeDict).join('|')})`, 'g');
+/**
+ * encode html
+ * @param {string} s 需要encode的html代码
+ * @memberof module:tencent/imutils
+ * @return {string}
+ */
 function encodeHtml(text) {
   return text
     ? text.replace(encodeReg, (all) => {
