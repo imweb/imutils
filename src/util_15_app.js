@@ -188,6 +188,31 @@ function jumpToNativePage(url) {
   }
 }
 
+/**
+ * 设置app右上角按扭
+ * @param {object} 按钮信息
+ * @param {function} listener 监听的函数
+ * @memberof module:tencent/imutils
+ */
+function setRightTitleShare(options = {}, listener) {
+  const {
+    enable = 1,
+    imageIcon = '',
+    imageIconDefault = '',
+  } = options;
+  if (window.mqq) {
+    window.mqq.invoke('edu', 'setRightTitle', {
+      enable,
+      imageIcon,
+      imageIconDefault,
+    });
+
+    window.mqq.removeEventListener('rightTitleClicked');
+    window.mqq.addEventListener('rightTitleClicked', () => {
+      listener();
+    });
+  }
+}
 
 export {
   openUrlByIframe,
@@ -196,4 +221,5 @@ export {
   isAppInstalled,
   gotoNativePage,
   jumpToNativePage,
+  setRightTitleShare,
 };
