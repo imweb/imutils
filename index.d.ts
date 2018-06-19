@@ -534,6 +534,7 @@ export interface ImutilsStatic {
   isAppInstalled();
   gotoNativePage();
   jumpToNativePage();
+  setRightTitleShare();
   callService();
   callBussinessQQ();
   callQQGroup();
