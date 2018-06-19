@@ -29,7 +29,7 @@ import {
  * @param {function} listener 监听的函数
  * @return {null}
  */
-function addPageShowListener(listener) {
+function addPageShowListener(listener = () => {}) {
   const isAndroid = window.mqq && window.mqq.android;
   if (isFudaoApp()) {
     if (window.mqq && window.mqq.iOS && getAppVersion() >= 6) {

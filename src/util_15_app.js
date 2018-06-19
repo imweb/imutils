@@ -8,6 +8,7 @@ import {
 } from './util_04_ua';
 import { weiXinApply } from './util_11_wx';
 import { versionfunegt } from './util_07';
+import { isFunction } from './util_18_type';
 
 /**
  * 通过Iframe打开链接地址
@@ -115,7 +116,7 @@ function openApp({
  * 检查 辅导 APP 是否已安装
  * @memberof module:tencent/imutils
  */
-function isAppInstalled(callback) {
+function isAppInstalled(callback = () => {}) {
   if (window.mqq) {
     const packageName = {
       name: mqq.iOS ? 'tencentk12' : 'com.tencent.k12',
@@ -194,7 +195,7 @@ function jumpToNativePage(url) {
  * @param {function} listener 监听的函数
  * @memberof module:tencent/imutils
  */
-function setRightTitleShare(options = {}, listener) {
+function setRightTitleShare(options = {}, listener = () => {}) {
   const {
     enable = 1,
     imageIcon = '',

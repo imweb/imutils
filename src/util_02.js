@@ -21,8 +21,8 @@ const decodeReg = new RegExp(`(${arr.join('|')})`, 'g');
 function decodeHtml(s) {
   return s
     ? s.replace(decodeReg, (all) => {
-        return htmlDecodeDict[all];
-      })
+      return htmlDecodeDict[all];
+    })
     : s;
 }
 
@@ -45,8 +45,8 @@ const encodeReg = new RegExp(`(${Object.keys(htmlEncodeDict).join('|')})`, 'g');
 function encodeHtml(text) {
   return text
     ? text.replace(encodeReg, (all) => {
-        return htmlEncodeDict[all];
-      })
+      return htmlEncodeDict[all];
+    })
     : text;
 }
 export { decodeHtml, encodeHtml };
