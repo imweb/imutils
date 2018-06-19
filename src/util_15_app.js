@@ -189,7 +189,7 @@ function jumpToNativePage(url) {
 }
 
 /**
- * 设置app右上角安扭
+ * 设置app右上角按扭
  * @param {object} 按钮信息
  * @param {function} listener 监听的函数
  * @memberof module:tencent/imutils
