@@ -8,7 +8,6 @@ import {
 } from './util_04_ua';
 import { weiXinApply } from './util_11_wx';
 import { versionfunegt } from './util_07';
-import { isFunction } from './util_18_type';
 
 /**
  * 通过Iframe打开链接地址
