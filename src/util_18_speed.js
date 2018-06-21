@@ -165,4 +165,4 @@ const speed = {
   report,
 };
 
-export default { speed };
+export { speed };
