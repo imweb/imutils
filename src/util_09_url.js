@@ -53,6 +53,28 @@ function parseQueryString(url) {
   return query;
 }
 
+/**
+ * 把传入的 object 转成 queryString
+ * @param {object} obj 需要被转换的 object
+ * @return {string}
+ * @memberof module:tencent/imutils
+ */
+function objectToQueryString(obj) {
+  return Object.keys(obj).reduce((next, prev) => {
+    const value = obj[prev];
+
+    if (typeof value !== 'undefined'
+      && value !== false
+      && value.toString().length) {
+      next.push([
+        prev,
+        typeof value === 'boolean' ? '' : encodeURIComponent(value),
+      ].filter(Boolean).join('='));
+    }
+    return next;
+  }, []).join('&');
+}
+
 // helper for addQuickBackWV
 function param(obj, sep) {
   const s = [];
@@ -116,4 +138,5 @@ export {
   parseQueryString,
   updateQueryString,
   addQuickBackWV,
+  objectToQueryString,
 };
