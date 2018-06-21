@@ -1,4 +1,4 @@
- /**
+/**
  * 测速上报
  * @param  {object} speed 测速数据，为了结构化，key为易理解的字符串，数字索引在opts.map中
  * @param  {object} opts  参数
@@ -31,10 +31,10 @@
  * });
  * @reurn {void}
  */
- 
 
 
-import {getNetworkType} from './util_07';
+import { getNetworkType } from './util_07';
+import { objectToQueryString } from './util_09_url';
 
 const cfg = {
   isd: {
@@ -75,16 +75,6 @@ if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
 const reportCgi = '//report.huatuo.qq.com/report.cgi?';
 const testIsdFlagsReg = /\d+-\d+-\d+/;
 
-function objToArr(obj) {
-  const arr = [];
-
-  Object.keys(obj).forEach((key) => {
-    arr.push(`${key}=${obj[key]}`);
-  });
-
-  return arr;
-}
-
 function getParams(opts) {
   const ret = [];
   Object.keys(cfg).forEach((key) => {
@@ -104,7 +94,6 @@ function report(speed, opts) {
   const reportDict = {};
   let params;
   let flags;
-  let reportArgs;
   let timing;
   let start = -1;
   let map;
@@ -133,7 +122,8 @@ function report(speed, opts) {
       timing = window.performance.timing;
       start = timing.navigationStart;
       map = cfg.isd;
-      for(const key in timing) {
+      /* eslint-disable no-restricted-syntax */
+      for (const key in timing) {
         if (map[key]) {
           time = timing[key] - start;
           reportDict[map[key]] = time > 0 ? time : 0;
@@ -166,8 +156,7 @@ function report(speed, opts) {
       });
     }
 
-    reportArgs = objToArr(reportDict);
-    new Image().src = `${reportCgi + params}&speedparams=${encodeURIComponent(reportArgs.join('&'))}`;
+    new Image().src = `${reportCgi + params}&speedparams=${encodeURIComponent(objectToQueryString(reportDict))}`;
   });
 }
 
@@ -176,6 +165,4 @@ const speed = {
   report,
 };
 
-export {
-  speed
-};
+export default { speed };
