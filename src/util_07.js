@@ -1,7 +1,7 @@
 import { setCookie } from './util_03_cookie';
-import { isWX, isMQQ, isFudaoApp, getAppVersion } from './util_04_ua';
+import { isWX, isMQQ, isFudaoApp } from './util_04_ua';
 import { weiXinApply } from './util_11_wx';
-import { openAppPage } from './util_15_app';
+import { openAppPage, getAppVersion } from './util_15_app';
 /**
  * getBitMapValue
  * @memberof module:tencent/imutils
@@ -289,11 +289,9 @@ let lastNetworkType;
  */
 function getNetworkType(cb) {
   const callback = (res) => {
-    console.error('res', res);
     const resArr = ['', 'wifi', '2g', '3g', '4g', 'cable'];
     lastNetworkType = resArr[res] || '';
     cb(lastNetworkType);
-    console.error('lastNetworkType', lastNetworkType);
   }
 
   if (typeof lastNetworkType === 'undefined') {
