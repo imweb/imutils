@@ -2,7 +2,7 @@
  * @module tencent/imutils
  * @description 一些描述信息一些描述信息一些描述信息
  */
-
+export * from './util_18_speed';
 export * from './util_17_chat';
 export * from './util_16_qq';
 export * from './util_15_app';
