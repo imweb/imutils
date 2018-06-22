@@ -32,7 +32,7 @@
  * @reurn {void}
  */
 
-
+import { isClient } from './util_00_env'
 import { getNetworkType } from './util_07';
 import { objectToQueryString } from './util_09_url';
 
@@ -64,12 +64,14 @@ const cfg = {
   apn: '',
 };
 
-if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
-  cfg.platform = 'ios';
-} else if (/Android/i.test(navigator.userAgent)) {
-  cfg.platform = 'android';
-} else if (/win|macintel/i.test(navigator.platform)) {
-  cfg.platform = 'pc';
+if(isClient){
+  if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
+    cfg.platform = 'ios';
+  } else if (/Android/i.test(navigator.userAgent)) {
+    cfg.platform = 'android';
+  } else if (/win|macintel/i.test(navigator.platform)) {
+    cfg.platform = 'pc';
+  }
 }
 
 const reportCgi = '//report.huatuo.qq.com/report.cgi?';
