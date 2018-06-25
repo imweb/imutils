@@ -32,7 +32,7 @@
  * @reurn {void}
  */
 
-import { isClient } from './util_00_env'
+import { isClient } from './util_00_env';
 import { getNetworkType } from './util_07';
 import { objectToQueryString } from './util_09_url';
 
@@ -64,7 +64,7 @@ const cfg = {
   apn: '',
 };
 
-if(isClient){
+if (isClient) {
   if (/iPhone|iPad|iPod|iOS/i.test(navigator.userAgent)) {
     cfg.platform = 'ios';
   } else if (/Android/i.test(navigator.userAgent)) {
@@ -104,7 +104,7 @@ function report(speed, opts) {
 
   // console.log('huatuo report:', speed, opts);
   if (!testIsdFlagsReg.test(opts.isdFlags)) {
-    console.log(`the option: isdFlags[${opts.isdFlags}] is wrong!`);
+    console.log(`the option: isdFlags[${opts.isdFlags}] is wrong!`); // eslint-disable-line no-console
     return;
   }
 
@@ -167,4 +167,4 @@ const speed = {
   report,
 };
 
-export { speed };
+export { speed }; // eslint-disable-line import/prefer-default-export
