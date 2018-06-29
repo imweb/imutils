@@ -4,7 +4,7 @@ const config = require('./package.json');
 
 const { version } = config;
 
-const cmd = `./node_modules/.bin/jsdoc -d ./doc/${version} --configure .jsdoc.json --verbose`;
+const cmd = `./node_modules/.bin/jsdoc -d ./docs/${version} --configure .jsdoc.json --verbose`;
 
 exec(cmd, { env: process.env }, (err, stdout, stderr) => {
   if (err) {
