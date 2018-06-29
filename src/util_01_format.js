@@ -145,7 +145,8 @@ function translateTimeStamp(time) {
  * @return {string}
  */
 function pad(num, n) {
-  let i = `${num}`.length;
+  num = num.toString();
+  let i = num.length;
   while (i++ < n) {
     num = `0${num}`;
   }
