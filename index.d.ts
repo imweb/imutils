@@ -103,6 +103,15 @@ export interface ImutilsStatic {
   translateTimeStamp(time: number | string): string;
 
   /**
+   * @description 数字左填充0
+   * @param {number} num 待格式化的数字
+   * @param {number} n 返回字符串的长度
+   * @return {string}
+   * @memberof ImutilsStatic
+   */
+  pad(time: number | string): string;
+
+  /**
    * decode html代码
    * @param {string} string
    * @returns {string}
