@@ -266,6 +266,7 @@ function jsonp(url, callback, opt = {}) {
 
 /**
  * @memberof module:tencent/imutils
+ * @deprecated 请使用 imutils.pad 方法
  * @ignore
  */
 function fillZero(v) {
