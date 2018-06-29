@@ -276,6 +276,66 @@ function fillZero(v) {
   return v;
 }
 
+const toString = Object.prototype.toString; // eslint-disable-line prefer-destructuring
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {function} obj
+ * @return {boolean}
+ * @ignore
+ */
+function isFunction(obj) {
+  return typeof obj === 'function';
+}
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {array} obj
+ * @return {boolean}
+ */
+function isArray(obj) {
+  if (Array.isArray) {
+    return Array.isArray(obj);
+  }
+  return toString.call(obj) === '[object Array]';
+}
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {date} obj
+ * @return {boolean}
+ */
+function isDate(obj) {
+  return toString.call(obj) === '[object Date]';
+}
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {regexp} obj
+ * @return {boolean}
+ */
+function isRegExp(obj) {
+  return toString.call(obj) === '[object RegExp]';
+}
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {boolean} obj
+ * @return {boolean}
+ */
+function isBoolean(obj) {
+  return toString.call(obj) === '[object Boolean]';
+}
+
+/**
+ * @memberof module:tencent/imutils
+ * @param {number} obj
+ * @return {boolean}
+ */
+function isNumerical(obj) {
+  return obj === obj - 0;
+}
+
 export {
   deepAssign,
   str,
@@ -289,4 +349,10 @@ export {
   loadScript,
   jsonp,
   fillZero,
+  isFunction,
+  isArray,
+  isDate,
+  isRegExp,
+  isBoolean,
+  isNumerical,
 };
