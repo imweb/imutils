@@ -21,23 +21,3 @@ export * from './util_03_cookie';
 export * from './util_02';
 export * from './util_01_format';
 export * from './util_00_env';
-
-// 手Q750-阅读内容与消息列表快捷切换
-// android 特殊处理
-(function () {
-  const isClient = typeof window === 'object' && window && typeof document !== 'undefined';
-  if (isClient) {
-    if (window.mqq && window.mqq.android && window.mqq.QQVersion !== 0) {
-      mqq.ui.setTitleButtons({
-        right: {
-          title: '菜单',
-          hidden: false,
-          iconID: 4,
-          callback() {
-            mqq.ui.showShareMenu();
-          },
-        },
-      });
-    }
-  }
-}());
