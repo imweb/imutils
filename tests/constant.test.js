@@ -1,4 +1,4 @@
-import { getGradeNameStr } from '../src/util_13_constant';
+import { getGradeNameStr } from '../index';
 
 test('util_13_constant getGradeNameStr', () => {
   expect(getGradeNameStr('7001,7002,7002,7003,7004,7005,6003,6002,6001,5001,5002,5003'))

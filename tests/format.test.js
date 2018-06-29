@@ -1,4 +1,4 @@
-import { pad } from '../src/util_01_format';
+import { pad } from '../index';
 
 test('pad util', () => {
   expect(pad(2, 2)).toBe('02');
