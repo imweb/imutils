@@ -137,6 +137,22 @@ function translateTimeStamp(time) {
   return `${y}-${formatTime(m)}-${formatTime(d)} ${formatTime(h)}:${formatTime(mm)}:${formatTime(s)}`;
 }
 
+/**
+ * 数字左填充0
+ * @memberof module:tencent/imutils
+ * @param {number} num - 待格式化的数字
+ * @param {number} n - 返回字符串的长度
+ * @return {string}
+ */
+function pad(num, n) {
+  num = num.toString();
+  let i = num.length;
+  while (i++ < n) {
+    num = `0${num}`;
+  }
+  return num;
+}
+
 export {
   formatShortSignUpNum,
   formatDate,
@@ -144,4 +160,5 @@ export {
   price,
   prices,
   translateTimeStamp,
+  pad,
 };
